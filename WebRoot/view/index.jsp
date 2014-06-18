@@ -239,7 +239,7 @@
 	</style>
 
 
-  
+
     <script type="text/javascript">
 	function StopUp(){
 		
@@ -305,6 +305,7 @@
 			    </div>
 			    
 			</div>
+			  
     	</div>
     	<div id="map-display">
     		hello right
