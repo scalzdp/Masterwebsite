@@ -235,28 +235,94 @@
             margin: 2px 0 0 2px;
             font-style: normal;
         }
+        #head-line{
+        	width:100%;
+        	hight:5%;
+        }
+        #body-context{
+        	width:100%;
+        	hight:95%;
+        }
         
 	</style>
-
-
-
+	<link rel="stylesheet" href="css/citySelector.css" type="text/css"></link>
+	<style>
+	.cityinput{
+            border-width: 1px;
+            border-style: solid;
+            border-color: #666 #ccc #ccc #666;
+            height: 24px;
+            line-height: 24px;
+            width: 175px;
+            font-size: 12px;
+            padding-left: 2px;
+            background: url(Img/select.png) no-repeat 150px 5px;
+            }
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
+	var page=0;
+	var row=4;
 	function StopUp(){
 		
 	}
 	function GoUp(){
-		
+		page=page-1;
+		if(page<=0){
+			//不做请求
+		}else{
+			ajaxPost(page,row)
+		}
 	}
 	function StopDown(){
 		
 	}
 	function GoDown(){
-		
+		page=page+1;
+		ajaxPost(page,row);
+	}
+	function ajaxPost(page,row){
+		$.ajax({
+			type:"post",
+			url:"",
+			dataType:"json",
+			data:{},
+			success:function(data){
+				if(!$.isEmptyObject(data)){
+					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
+					
+				}
+				//如果请求回来的data为空同样不进行
+			}
+		});
+	}
+	//创建新的节点
+	function create_new_li(data){
+		var cc = [];
+		for(var l in data){
+			alert(data[l]);
+			//将所有的节点创建放入cc中
+		}
+		return cc.join('');
+	}
+	//移除老的节点
+	function remove_old_li(){
+		//选中ul下面的说有li节点
+		//移除ul下面的所有li节点
+		//将创建的新的li的list附加到ul节点上面
 	}
     </script>
   </head>
   
   <body>
+  	<div id="head-line">
+  		<input type="text" class="cityinput" id="citySelect" value="城市名">
+    	<script type="text/javascript" src="js/citySelector.js"></script>
+    	<script type="text/javascript">
+    		var test=new Vcity.CitySelector({input:'citySelect'});
+		</script>
+  	</div>
+  	<div id="body-context">
     	<div id="img-display" >
     		<div class="j_box">
 			    <div class="j_boxcontent">
@@ -310,5 +376,6 @@
     	<div id="map-display">
     		hello right
     	</div>
+    </div>
   </body>
 </html>
