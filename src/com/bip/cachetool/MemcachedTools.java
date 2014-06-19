@@ -1,5 +1,8 @@
 package com.bip.cachetool;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemcachedTools {
 	private void connectMemcached(String host,String port){
 		
