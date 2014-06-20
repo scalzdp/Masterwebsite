@@ -1,5 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -249,12 +252,12 @@
 	<style>
 	.cityinput{
             border-width: 1px;
-            border-style: solid;
-            border-color: #666 #ccc #ccc #666;
+            border-style:none;
             height: 24px;
             line-height: 24px;
-            width: 175px;
+            width: 70px;
             font-size: 12px;
+            font-family: Verdana, Arial, Sans-serif;
             padding-left: 2px;
             background: url(Img/select.png) no-repeat 150px 5px;
             }
@@ -263,9 +266,15 @@
     <script type="text/javascript">
 	var page=0;
 	var row=4;
+	//初始化数据
+	function initData(){
+		ajaxPost(0,4);
+	}
+	//停止向上
 	function StopUp(){
 		
 	}
+	//向上一页
 	function GoUp(){
 		page=page-1;
 		if(page<=0){
@@ -274,23 +283,29 @@
 			ajaxPost(page,row)
 		}
 	}
+	//停止向下
 	function StopDown(){
 		
 	}
+	//向下一页
 	function GoDown(){
 		page=page+1;
 		ajaxPost(page,row);
 	}
+	//ajax请求翻页数据
 	function ajaxPost(page,row){
 		$.ajax({
 			type:"post",
-			url:"",
+			url:"./getMessage",
 			dataType:"json",
-			data:{},
+			data:{pages:page,rows:row},
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
+					var tmp = create_new_li(data);
 					
+					remove_old_li();
+					append_new_li(tmp);
 				}
 				//如果请求回来的data为空同样不进行
 			}
@@ -300,21 +315,36 @@
 	function create_new_li(data){
 		var cc = [];
 		for(var l in data){
-			alert(data[l]);
-			//将所有的节点创建放入cc中
+		    //将所有的节点创建放入cc中
+		    var img='test.jpg';
+			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="#" title="'+data[l].description+'">');
+			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none"></sub>');
+			cc.push('<img src="Img/'+img+'">');
+			cc.push('</div></a></li>');
 		}
 		return cc.join('');
+	}
+	
+	//选中相应的图片
+	function select(eve){
+		alert(eve.title);
 	}
 	//移除老的节点
 	function remove_old_li(){
 		//选中ul下面的说有li节点
 		//移除ul下面的所有li节点
+		//var ul = document.getElementById("list1");
+		$("#list1").find("li").remove(); 
+	}
+	//添加新的节点
+	function append_new_li(data){
 		//将创建的新的li的list附加到ul节点上面
+		$("#list1").append(data);
 	}
     </script>
   </head>
   
-  <body>
+  <body onload="initData()">
   	<div id="head-line">
   		<input type="text" class="cityinput" id="citySelect" value="城市名">
     	<script type="text/javascript" src="js/citySelector.js"></script>
