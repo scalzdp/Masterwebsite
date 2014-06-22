@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		width: 62%;height: 100%;overflow: hidden;margin:0;float:left;border-right:1px solid red;
 		background: url(Img/waite-for-you.png)  no-repeat;
 		}
-		#map-display{width: 38%; position:relative; left:10px; height: 45%;overflow: hidden;margin:0;}
+		#map-display{width: 37%; position:relative; left:10px; float:right;height: 100%;overflow: hidden;margin:0;}
 		body
         {
             font-family: Arial, Verdana, 宋体;
@@ -261,6 +261,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             padding-left: 2px;
             background: url(Img/select.png) no-repeat 150px 5px;
             }
+            #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;float:left;}
 	</style>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript">
@@ -325,10 +326,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		return cc.join('');
 	}
 	
-	//选中相应的图片
-	function select(eve){
-		alert(eve.title);
-	}
+	
 	//移除老的节点
 	function remove_old_li(){
 		//选中ul下面的说有li节点
@@ -405,6 +403,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div>
     	<div id="map-display">
     		hello right
+    		<div id="allmap"></div>
+    		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=x2MhgDZIHVXhQwWLGhc98Qar"></script>
+    		<script type="text/javascript">
+    		
+    		//刷新地图然后界面显示
+			function locationPoint(lat,lng){
+				var ZoomLevel =15;
+				var iscreatr=false;
+				//---------------------------------------------基础示例---------------------------------------------
+				var map = new BMap.Map("allmap",{minZoom:12,maxZoom:20});            // 创建Map实例
+				map.centerAndZoom(new BMap.Point(lng,lat),ZoomLevel);  //初始化时，即可设置中心点和地图缩放级别。
+				//map.centerAndZoom("成都",13);                     // 初始化地图,设置中心点坐标和地图级别。
+				map.enableScrollWheelZoom(true);//鼠标滑动轮子可以滚动
+			}
+			
+			//选中相应的图片
+			function select(eve){
+				var tmp = eve.title.split(',');
+				locationPoint(tmp[0],tmp[1]);
+				
+			}
+			
+			//地图上面标注
+			function addMark(lat,lng,message){
+				
+			}
+		
+    		</script>
     	</div>
     </div>
   </body>
