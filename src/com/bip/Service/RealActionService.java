@@ -15,7 +15,7 @@ public class RealActionService {
 	@Autowired
 	private ICatch cached;
 	
-	public List<RealActionVO> getActionVO(int page,int rows,String city){
+	public List<RealActionVO> getActionVO(int page,int rows,String city,int currentMaxID){
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		for(int i=0;i<4;i++){
 			RealActionVO vo = new RealActionVO();
@@ -25,7 +25,7 @@ public class RealActionService {
 			vo.setLatitude(30.684939);
 			vo.setLongitude(104.046489);
 			vo.setLocation("成都市，成华区，四川省草堂医院");
-			vo.setRealactivityID(1);
+			vo.setRealactivityID(i);
 			vo.setTelephone("15828316576");
 			vos.add(vo);
 		}

@@ -299,7 +299,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			type:"post",
 			url:"./getMessage",
 			dataType:"json",
-			data:{pages:page,rows:row},
+			data:{pages:page,rows:row,currentMax:get_Min_leaf()},
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
@@ -319,7 +319,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    //将所有的节点创建放入cc中
 		    var img='test.jpg';
 			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="#" title="'+data[l].description+'">');
-			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none"></sub>');
+			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none">'+data[l].realactivityID+'</sub>');
 			cc.push('<img src="Img/'+img+'">');
 			cc.push('</div></a></li>');
 		}
@@ -339,6 +339,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//将创建的新的li的list附加到ul节点上面
 		$("#list1").append(data);
 	}
+	
     </script>
   </head>
   
@@ -422,12 +423,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			function select(eve){
 				var tmp = eve.title.split(',');
 				locationPoint(tmp[0],tmp[1]);
-				
+				get_Min_leaf();
 			}
 			
 			//地图上面标注
 			function addMark(lat,lng,message){
 				
+			}
+			
+			function get_Min_leaf(){
+				var max=0;
+				try{
+					var tem = $(".p_img_tag");//[0].innerHTML;
+					for(var i=0;i<tem.length;i++){
+						var t =parseInt(tem.innerHTML);
+						if(t>max){
+							max=t;
+						}
+					}
+				}
+				catch(e){
+				
+				}
+				return max;
 			}
 		
     		</script>

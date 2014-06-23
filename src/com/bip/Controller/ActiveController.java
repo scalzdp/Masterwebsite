@@ -25,11 +25,12 @@ public class ActiveController {
 	
 	@RequestMapping(value="getMessage",method=RequestMethod.POST)
 	public String getMessage(Model model,HttpServletRequest request){
-		int page=0,rows=4;
+		int page=0,rows=4,currentMaxID=0;
 		page = Integer.parseInt(request.getParameter("pages"));
 		rows = Integer.parseInt(request.getParameter("rows"));
+		currentMaxID = Integer.parseInt(request.getParameter("currentMax"));
 		String city="³É¶¼";
-		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city));
+		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID));
 		request.setAttribute("jsonData", jsonData);
 		return "json";
 	}
