@@ -1,5 +1,7 @@
 package com.bip.cachetool;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Service;
 
 import com.danga.MemCached.MemCachedClient;
@@ -13,40 +15,74 @@ public class MemcachedTools {
 	protected static MemcachedTools memCached = new MemcachedTools();
 	 
 	static{
-		//服务器列表和其权重
+		//server list and its weight
 		String[] servers={"127.0.0.1:11211"};
 		Integer[] weights={3};
 		
-		//获取socket连接池的实例对象
+		//get the socket  connection pool instance
 		SockIOPool pool =SockIOPool.getInstance();
 		
-		//设置服务器信息
+		//set the server parameters
 		pool.setServers(servers);
 		pool.setWeights(weights);
 		
-		//设置初始连接数、最小和最大连接数以及最大处理时间
+		//set init number of connections and the min and the max number of connections and the max handle time 
 		pool.setInitConn(5);
 		pool.setMinConn(5);
 		pool.setMaxConn(250);
 		pool.setMaxIdle(1000*60*60*6);
 		
-		//设置主线程的睡眠时间
+		//set the main sleep time
 		pool.setMaintSleep(30);
 		
+		//set TCP parameter,connection timeout
+		pool.setNagle(false);
+		pool.setSocketTO(3000);
+		pool.setSocketConnectTO(0);
+		
+		//init connection pool
+		pool.initialize();
+		
+		//Compression setting, more than specified size, the data will be compressed
+		//mcc.setCompressEnable(true);
+		//mcc.setCompressThreshold(64*1024);
 	}
-	private void connectMemcached(String host,String port){
+	
+	//protected construct ,not allow be instanced
+	protected MemcachedTools(){
 		
 	}
 	
-	private void disConnectMemcached(String host,String port){
-		
+	public static MemcachedTools getInstance(){
+		return memCached;
 	}
 	
-	private void put(String key,Object value){
-		
+	/* add a object to memcached
+	 * @param key
+	 * @param value
+	 * @return
+	 * */
+	public boolean add(String key,Object value){
+		return mcc.add(key, value);
 	}
 	
-	private Object get(String key){
-		return null;
+	public boolean add(String key,Object value,Date expiry){
+		return mcc.add(key, value, expiry);
+	}
+	
+	public boolean replace(String key,Object value){
+		return mcc.replace(key,value);
+	}
+	
+	public boolean replace(String key,Object value,Date expiry){
+		return mcc.replace(key, value, expiry);
+	}
+	
+	public Object get(String key){
+		return mcc.get(key);
+	}
+
+	public Object delete(String key ){
+		return mcc.delete(key);
 	}
 }
