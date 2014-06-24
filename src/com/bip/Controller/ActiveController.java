@@ -28,8 +28,8 @@ public class ActiveController {
 		int page=0,rows=4,currentMaxID=0;
 		page = Integer.parseInt(request.getParameter("pages"));
 		rows = Integer.parseInt(request.getParameter("rows"));
-		currentMaxID = Integer.parseInt(request.getParameter("currentMax"));
-		String city="³É¶¼";
+		currentMaxID = 5;//Integer.parseInt(request.getParameter("currentMax"));
+		String city="CTU";
 		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID));
 		request.setAttribute("jsonData", jsonData);
 		return "json";

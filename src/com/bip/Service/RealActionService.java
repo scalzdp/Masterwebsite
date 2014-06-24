@@ -17,18 +17,20 @@ public class RealActionService {
 	
 	public List<RealActionVO> getActionVO(int page,int rows,String city,int currentMaxID){
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
-		for(int i=0;i<4;i++){
-			RealActionVO vo = new RealActionVO();
-			vo.setActiontypename("ÅÜ²½");
-			vo.setDateTime("2014-06-20");
-			vo.setDescription("just like playing basketbool");
-			vo.setLatitude(30.684939);
-			vo.setLongitude(104.046489);
-			vo.setLocation("³É¶¼ÊÐ£¬³É»ªÇø£¬ËÄ´¨Ê¡²ÝÌÃÒ½Ôº");
-			vo.setRealactivityID(i);
-			vo.setTelephone("15828316576");
-			vos.add(vo);
-		}
+//		for(int i=0;i<5;i++){
+//			RealActionVO vo = new RealActionVO();
+//			vo.setActiontypename("ï¿½Ü²ï¿½");
+//			vo.setDateTime("2014-06-20");
+//			vo.setDescription("just like playing basketbool");
+//			vo.setLatitude(30.684939);
+//			vo.setLongitude(104.046489);
+//			vo.setLocation("ï¿½É¶ï¿½ï¿½Ð£ï¿½ï¿½É»ï¿½ï¿½ï¿½ï¿½Ä´ï¿½Ê¡ï¿½ï¿½ï¿½ï¿½Ò½Ôº");
+//			vo.setRealactivityID(i);
+//			vo.setTelephone("15828316576");
+//			vos.add(vo);
+//		}
+		
+		vos = cached.searchFromCached(page, rows, city, currentMaxID);
 		return vos;
 	}
 }

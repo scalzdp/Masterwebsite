@@ -21,6 +21,8 @@ public class CachedTool implements ICatch {
 	
 	private MemcachedTools memcached = MemcachedTools.getInstance();
 
+	/* search message from memcached,this key from construct 
+	 * */
 	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		while(vos.size()<rows){
