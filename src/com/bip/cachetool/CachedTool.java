@@ -50,15 +50,6 @@ public class CachedTool implements ICatch {
 		return vos;
 	}
 
-	public List<RealActionVO> searchFromDB(int page, int rows, String city) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void putObjectValueToCached(RealActionVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public int getRealActivityMaxID() {
 		// TODO Auto-generated method stub
