@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bip.bean.Location;
+import com.bip.vo.RealActionVO;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -57,5 +58,38 @@ public class JsonStrHandler {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	/** convert object to jsonString  
+	 * */
+	public static <T> String convertObjectToJson(T object){
+		try{
+			if(object==null){
+				return "";
+			}
+			JSONArray jo = JSONArray.fromObject(object);
+			System.err.println(jo.toString());
+			return jo.toString();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	/** convert jsonString to RealActionVO object
+	 * */
+	public static RealActionVO convertJSONTOObject(String jsonString){
+		RealActionVO vo = new RealActionVO();
+		JSONArray jsonArray = JSONArray.fromObject(jsonString);
+
+		JSONObject jsonObj = JSONObject.fromObject(jsonArray.get(0));
+		vo.setActiontypename(jsonObj.getString("actiontypename"));
+		vo.setDateTime(jsonObj.getString("dateTime"));
+		vo.setDescription(jsonObj.getString("description"));
+		vo.setLatitude(jsonObj.getDouble("latitude"));
+		vo.setLongitude(jsonObj.getDouble("longitude"));
+		vo.setRealactivityID(jsonObj.getInt("realactivityID"));
+		vo.setTelephone(jsonObj.getString("telephone"));
+		return vo;
 	}
 }

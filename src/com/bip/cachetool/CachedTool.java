@@ -10,6 +10,7 @@ import com.bip.DAO.IBaseDAO;
 import com.bip.bean.ActionType;
 import com.bip.bean.Location;
 import com.bip.bean.RealActivity;
+import com.bip.utils.JsonStrHandler;
 import com.bip.vo.RealActionVO;
 
 @Service
@@ -26,8 +27,11 @@ public class CachedTool implements ICatch {
 	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		while(vos.size()<rows){
-			if(memcached.get(getRealActivityKey(currentMaxID))!=null){
-				RealActionVO vo = (RealActionVO)memcached.get(getRealActivityKey(currentMaxID));
+			String key = getRealActivityKey(currentMaxID);
+
+			
+			if(memcached.get(key)!=null){
+				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)memcached.get(key));
 				vos.add(vo);
 			}else{
 				RealActivity ra = baseDAO.get(new RealActivity(), currentMaxID);
@@ -42,12 +46,15 @@ public class CachedTool implements ICatch {
 					vo.setLongitude(location.getLongitude());
 					vo.setRealactivityID(ra.getId());
 					vo.setTelephone(ra.getTelephone());
-					memcached.add(getRealActivityKey(currentMaxID), vo);
+					memcached.add(key, JsonStrHandler.convertObjectToJson(vo));
 				}
 				vos.add(vo);
 				
 			}
 			currentMaxID--;
+			if(currentMaxID==0){
+				currentMaxID=getMaxID();
+			}
 		}
 		return vos;
 	}
@@ -64,6 +71,12 @@ public class CachedTool implements ICatch {
 	
 	private String getRealActivityKey(int id){
 		return "realactivity_"+id;
+	}
+	
+	private int getMaxID(){
+		memcached.add("MaxID",2);
+		Object maxID = memcached.get("MaxID");
+		return Integer.parseInt(maxID.toString());
 	}
 	
 	private String getLocationKey(int id){
