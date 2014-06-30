@@ -74,7 +74,10 @@ public class CachedTool implements ICatch {
 	}
 	
 	private int getMaxID(){
-		memcached.add("MaxID",2);
+		if(memcached.get("MaxID")==null){
+			int maxid= baseDAO.getAllSelf(new RealActivity(), "t_realactivity").size();
+			memcached.add("MaxID",maxid);
+		}
 		Object maxID = memcached.get("MaxID");
 		return Integer.parseInt(maxID.toString());
 	}
@@ -82,8 +85,4 @@ public class CachedTool implements ICatch {
 	private String getLocationKey(int id){
 		return "location_"+id;
 	}
-	
-
-
-	
 }
