@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         {
         	position: relative;
             width: 100%;
-            height: 200px;
+            height: 220px;
             border: 2px solid #C91521;
             padding: 0;
             z-index: 2;
@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             padding: 0 31px;
             margin: 0;
             width: 93%;
-            height: 200px;
+            height: 220px;
             overflow: hidden;
             _display: inline;
         }
@@ -321,7 +321,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="#" title="'+data[l].description+'">');
 			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none">'+data[l].realactivityID+'</sub>');
 			cc.push('<img src="Img/'+img+'">');
-			cc.push('</div></a></li>');
+			cc.push('</div>');
+			cc.push('<div class="p_price">');
+   			cc.push('<a href="./Details/'+data[l].realactivityID+'" title="'+data[l].description+'" target=_blank><<详细</a>');
+			cc.push('</div>');
+			cc.push('</a></li>');
 		}
 		return cc.join('');
 	}
