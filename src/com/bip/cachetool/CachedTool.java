@@ -29,6 +29,9 @@ public class CachedTool implements ICatch {
 	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		while(vos.size()<rows){
+			if(currentMaxID<=0){
+				currentMaxID=getMaxID();
+			}
 			String key = getRealActivityKey(currentMaxID);
 
 			
@@ -65,9 +68,7 @@ public class CachedTool implements ICatch {
 				
 			}
 			currentMaxID--;
-			if(currentMaxID==0){
-				currentMaxID=getMaxID();
-			}
+			
 		}
 		return vos;
 	}
@@ -75,7 +76,14 @@ public class CachedTool implements ICatch {
 	
 	public int getRealActivityMaxID() {
 		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		if(memcached.get("MAX_ID")==null){
+			result =  baseDAO.getAllSelf(new RealActivity() , "t_realactivity").size();
+			memcached.add("MAX_ID", result);
+		}else{
+			result = Integer.parseInt( memcached.get("MAX_ID").toString());
+		}
+		return result ;
 	}
 	
 	public String getRealActivityMaxKey(){

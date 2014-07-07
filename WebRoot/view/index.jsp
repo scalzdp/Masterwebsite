@@ -269,7 +269,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var row=4;
 	//初始化数据
 	function initData(){
-		ajaxPost(0,4);
+		ajaxPost(0,4,0);
 	}
 	//停止向上
 	function StopUp(){
@@ -277,12 +277,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	//向上一页
 	function GoUp(){
-		page=page-1;
+		
 		if(page<=0){
 			//不做请求
 		}else{
-			ajaxPost(page,row)
+		var max=get_Max_leaf();
+			ajaxPost(page,row,max);
 		}
+		page=page-1;
 	}
 	//停止向下
 	function StopDown(){
@@ -291,15 +293,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	//向下一页
 	function GoDown(){
 		page=page+1;
-		ajaxPost(page,row);
+		var min=get_Min_leaf();
+		ajaxPost(page,row,min);
 	}
 	//ajax请求翻页数据
-	function ajaxPost(page,row){
+	function ajaxPost(page,row,id){
 		$.ajax({
 			type:"post",
 			url:"./getMessage",
 			dataType:"json",
-			data:{pages:page,rows:row,currentMax:get_Min_leaf()},
+			data:{pages:page,rows:row,currentMax:id},
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
@@ -439,12 +442,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 			}
 			
-			function get_Min_leaf(){
+			function get_Max_leaf(){
 				var max=0;
 				try{
 					var tem = $(".p_img_tag");//[0].innerHTML;
 					for(var i=0;i<tem.length;i++){
-						var t =parseInt(tem.innerHTML);
+						var t =parseInt(tem[i].innerHTML);
 						if(t>max){
 							max=t;
 						}
@@ -454,6 +457,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				}
 				return max;
+			}
+			
+			
+			function get_Min_leaf(){
+				var min=88888888;
+				try{
+					var tem = $(".p_img_tag");//[0].innerHTML;
+					for(var i=0;i<tem.length;i++){
+						var t =parseInt(tem[i].innerHTML);
+						if(t<min){
+							min=t;
+						}
+					}
+				}
+				catch(e){
+				
+				}
+				return min;
 			}
 		
     		</script>
