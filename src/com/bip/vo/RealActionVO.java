@@ -1,5 +1,7 @@
 package com.bip.vo;
 
+import java.util.List;
+
 public class RealActionVO {
 	private Integer realactivityID;
 	private String location;
@@ -9,6 +11,8 @@ public class RealActionVO {
 	private Double latitude;
 	private Double longitude;
 	private String actiontypename;
+	
+	private List<PictureVO> picturevos;
 	
 	public Integer getRealactivityID() {
 		return realactivityID;
@@ -58,4 +62,11 @@ public class RealActionVO {
 	public void setActiontypename(String actiontypename) {
 		this.actiontypename = actiontypename;
 	}
+	public List<PictureVO> getPicturevos() {
+		return picturevos;
+	}
+	public void setPicturevos(List<PictureVO> picturevos) {
+		this.picturevos = picturevos;
+	}
+	
 }

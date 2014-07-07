@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.bip.DAO.IBaseDAO;
 import com.bip.bean.ActionType;
 import com.bip.bean.Location;
+import com.bip.bean.Picture;
 import com.bip.bean.RealActivity;
 import com.bip.utils.JsonStrHandler;
+import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
 
 @Service
@@ -33,10 +35,20 @@ public class CachedTool implements ICatch {
 			if(memcached.get(key)!=null){
 				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)memcached.get(key));
 				vos.add(vo);
+				memcached.delete(key);
 			}else{
 				RealActivity ra = baseDAO.get(new RealActivity(), currentMaxID);
 				RealActionVO vo = new RealActionVO();
 				if(ra!=null){
+					List<PictureVO> picturevos = new ArrayList<PictureVO>();
+					for(Picture p:baseDAO.queryFactory(new Picture(), "t_picture", " and isMain=1 and realActivityId="+ra.getId())){
+						PictureVO picturevo = new PictureVO();
+						picturevo.setId(p.getId());
+						picturevo.setIsMain(p.getIsMain());
+						picturevo.setPicMaxPath(p.getPicMaxPath());
+						picturevo.setRealActivityId(p.getRealActivityId());
+						picturevos.add(picturevo);
+					}
 					Location location = baseDAO.get(new Location(), ra.getLocationId());
 					ActionType actiontype = baseDAO.get(new ActionType(), ra.getActiontypeid());
 					vo.setActiontypename(actiontype.getName());
@@ -46,6 +58,7 @@ public class CachedTool implements ICatch {
 					vo.setLongitude(location.getLongitude());
 					vo.setRealactivityID(ra.getId());
 					vo.setTelephone(ra.getTelephone());
+					vo.setPicturevos(picturevos);
 					memcached.add(key, JsonStrHandler.convertObjectToJson(vo));
 				}
 				vos.add(vo);

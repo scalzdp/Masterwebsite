@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bip.bean.Location;
+import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
 
 import net.sf.json.JSONArray;
@@ -81,7 +82,7 @@ public class JsonStrHandler {
 	public static RealActionVO convertJSONTOObject(String jsonString){
 		RealActionVO vo = new RealActionVO();
 		JSONArray jsonArray = JSONArray.fromObject(jsonString);
-
+		List<PictureVO> picturevos = new ArrayList<PictureVO>();
 		JSONObject jsonObj = JSONObject.fromObject(jsonArray.get(0));
 		vo.setActiontypename(jsonObj.getString("actiontypename"));
 		vo.setDateTime(jsonObj.getString("dateTime"));
@@ -90,6 +91,18 @@ public class JsonStrHandler {
 		vo.setLongitude(jsonObj.getDouble("longitude"));
 		vo.setRealactivityID(jsonObj.getInt("realactivityID"));
 		vo.setTelephone(jsonObj.getString("telephone"));
+		JSONArray jsonArrayPictureVOs = JSONArray.fromObject(jsonObj.getString("picturevos"));
+		for(int i=0;i<jsonArrayPictureVOs.size();i++){
+			JSONObject jsonObjs = JSONObject.fromObject(jsonArrayPictureVOs.get(i));
+			PictureVO picturevo = new PictureVO();
+			picturevo.setId(jsonObjs.getInt("id"));
+			picturevo.setIsMain(jsonObjs.getInt("isMain"));
+			picturevo.setPicMaxPath(jsonObjs.getString("picMaxPath"));
+			picturevo.setPicMinPath(jsonObjs.getString("picMinPath"));
+			picturevo.setRealActivityId(jsonObjs.getInt("realActivityId"));
+			picturevos.add(picturevo);
+		}
+		vo.setPicturevos(picturevos);
 		return vo;
 	}
 }

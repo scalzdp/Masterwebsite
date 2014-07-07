@@ -320,7 +320,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    var img='test.jpg';
 			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="#" title="'+data[l].description+'">');
 			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none">'+data[l].realactivityID+'</sub>');
-			cc.push('<img src="Img/'+img+'">');
+			if(data[l].picturevos.length!=0){
+				cc.push('<img src="/Img/'+data[l].picturevos[0].picMaxPath+'">');
+			}else{
+				cc.push('<img src="Img/'+img+'">');
+			}
 			cc.push('</div>');
 			cc.push('<div class="p_price">');
    			cc.push('<a href="./Details/'+data[l].realactivityID+'" title="'+data[l].description+'" target=_blank><<详细</a>');
