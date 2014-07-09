@@ -26,12 +26,13 @@ public class ActiveController {
 	
 	@RequestMapping(value="getMessage",method=RequestMethod.POST)
 	public String getMessage(Model model,HttpServletRequest request){
-		int page=0,rows=4,currentMaxID=0;
+		int page=0,rows=4,currentMaxID=0,slidingDirection=0;
 		page = Integer.parseInt(request.getParameter("pages"));
 		rows = Integer.parseInt(request.getParameter("rows"));
 		currentMaxID = Integer.parseInt(request.getParameter("currentMax"));
+		slidingDirection = Integer.parseInt(request.getParameter("SlidingDirection"));
 		String city="CTU";
-		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID));
+		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID,slidingDirection));
 		request.setAttribute("jsonData", jsonData);
 		return "json";
 	}

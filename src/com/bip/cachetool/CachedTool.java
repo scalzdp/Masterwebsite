@@ -26,7 +26,7 @@ public class CachedTool implements ICatch {
 
 	/* search message from memcached,this key from construct 
 	 * */
-	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID) {
+	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID,int slidingDirections) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		while(vos.size()<rows){
 			if(currentMaxID<=0){
@@ -38,7 +38,7 @@ public class CachedTool implements ICatch {
 			if(memcached.get(key)!=null){
 				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)memcached.get(key));
 				vos.add(vo);
-				memcached.delete(key);
+				//	memcached.delete(key);
 			}else{
 				RealActivity ra = baseDAO.get(new RealActivity(), currentMaxID);
 				RealActionVO vo = new RealActionVO();
@@ -67,7 +67,12 @@ public class CachedTool implements ICatch {
 				vos.add(vo);
 				
 			}
-			currentMaxID--;
+			if(slidingDirections==1){
+				currentMaxID--;
+			}
+			if(slidingDirections==0){
+				currentMaxID++;
+			}
 			
 		}
 		return vos;

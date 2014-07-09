@@ -269,7 +269,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var row=4;
 	//初始化数据
 	function initData(){
-		ajaxPost(0,4,0);
+		ajaxPost(0,4,0,-1);
 	}
 	//停止向上
 	function StopUp(){
@@ -277,13 +277,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	//向上一页
 	function GoUp(){
-		
-		if(page<=0){
-			//不做请求
-		}else{
+
 		var max=get_Max_leaf();
-			ajaxPost(page,row,max);
-		}
+			ajaxPost(page,row,max,0);
 		page=page-1;
 	}
 	//停止向下
@@ -294,15 +290,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function GoDown(){
 		page=page+1;
 		var min=get_Min_leaf();
-		ajaxPost(page,row,min);
+		ajaxPost(page,row,min,1);
 	}
 	//ajax请求翻页数据
-	function ajaxPost(page,row,id){
+	function ajaxPost(page,row,id,type){
 		$.ajax({
 			type:"post",
 			url:"./getMessage",
 			dataType:"json",
-			data:{pages:page,rows:row,currentMax:id},
+			data:{pages:page,rows:row,currentMax:id,SlidingDirection:type},
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。

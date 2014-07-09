@@ -15,7 +15,7 @@ public class RealActionService {
 	@Autowired
 	private ICatch cached;
 	
-	public List<RealActionVO> getActionVO(int page,int rows,String city,int currentMaxID){
+	public List<RealActionVO> getActionVO(int page,int rows,String city,int currentMaxID,int slidingDirection){
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 //		for(int i=0;i<5;i++){
 //			RealActionVO vo = new RealActionVO();
@@ -30,7 +30,7 @@ public class RealActionService {
 //			vos.add(vo);
 //		}
 		
-		vos = cached.searchFromCached(page, rows, city, currentMaxID);
+		vos = cached.searchFromCached(page, rows, city, currentMaxID,slidingDirection);
 		return vos;
 	}
 }

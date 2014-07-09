@@ -6,7 +6,7 @@ import com.bip.vo.RealActionVO;
 
 public interface ICatch {
 	
-	public List<RealActionVO> searchFromCached(int page,int rows,String city,int currentMaxID);
+	public List<RealActionVO> searchFromCached(int page,int rows,String city,int currentMaxID,int  slidingDirection);
 	
 	public int getRealActivityMaxID();
 	
