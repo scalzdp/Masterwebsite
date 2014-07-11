@@ -269,7 +269,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var row=4;
 	//初始化数据
 	function initData(){
-		ajaxPost(0,4,0,-1);
+		ajaxPost(0,4,0,1);
 	}
 	//停止向上
 	function StopUp(){
@@ -277,10 +277,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	//向上一页
 	function GoUp(){
-
-		var max=get_Max_leaf();
+		
+		if(page>=0){
+			var max=get_Max_leaf();
 			ajaxPost(page,row,max,0);
-		page=page-1;
+			page=page-1;
+		}
 	}
 	//停止向下
 	function StopDown(){
@@ -302,10 +304,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
+					
 					var tmp = create_new_li(data);
 					
 					remove_old_li();
 					append_new_li(tmp);
+				}else{
+					if(type==1){
+						page--;
+					}
 				}
 				//如果请求回来的data为空同样不进行
 			}
@@ -416,7 +423,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<script type="text/javascript">
     		
     		//刷新地图然后界面显示
-			function locationPoint(lat,lng){
+			function locationPoint(lat,lng,message){
 				var ZoomLevel =15;
 				var iscreatr=false;
 				//---------------------------------------------基础示例---------------------------------------------
@@ -424,18 +431,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				map.centerAndZoom(new BMap.Point(lng,lat),ZoomLevel);  //初始化时，即可设置中心点和地图缩放级别。
 				//map.centerAndZoom("成都",13);                     // 初始化地图,设置中心点坐标和地图级别。
 				map.enableScrollWheelZoom(true);//鼠标滑动轮子可以滚动
+				addMark(lat,lng,message,map);
 			}
 			
 			//选中相应的图片
 			function select(eve){
 				var tmp = eve.title.split(',');
-				locationPoint(tmp[0],tmp[1]);
+				//var test = eve.innerHTML;
+				var message = eve.childNodes[0].title;
+				locationPoint(tmp[0],tmp[1],message);
 				get_Min_leaf();
 			}
 			
 			//地图上面标注
-			function addMark(lat,lng,message){
-				
+			function addMark(lat,lng,message,map){
+				var point = new BMap.Point(lng,lat);//默认
+				 var marker = new BMap.Marker(point);  
+				 // 创建标注对象并添加到地图  
+				 var marker = new BMap.Marker(point);
+				 var label = new BMap.Label(message,{offset:new BMap.Size(20,-10)});
+		 		 marker.setLabel(label);
+				 map.addOverlay(marker); 
 			}
 			
 			function get_Max_leaf(){

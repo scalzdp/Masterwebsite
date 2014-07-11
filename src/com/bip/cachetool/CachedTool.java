@@ -30,7 +30,7 @@ public class CachedTool implements ICatch {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		while(vos.size()<rows){
 			if(currentMaxID<=0){
-				currentMaxID=getMaxID();
+				currentMaxID=getRealActivityMaxID();
 			}
 			String key = getRealActivityKey(currentMaxID);
 
@@ -71,7 +71,11 @@ public class CachedTool implements ICatch {
 				currentMaxID--;
 			}
 			if(slidingDirections==0){
-				currentMaxID++;
+				if(getRealActivityMaxID()<=currentMaxID){
+					slidingDirections=1;
+				}else{
+					currentMaxID++;
+				}
 			}
 			
 		}
@@ -83,8 +87,7 @@ public class CachedTool implements ICatch {
 		// TODO Auto-generated method stub
 		int result=0;
 		if(memcached.get("MAX_ID")==null){
-			result =  baseDAO.getAllSelf(new RealActivity() , "t_realactivity").size();
-			memcached.add("MAX_ID", result);
+			result =  getMaxID();
 		}else{
 			result = Integer.parseInt( memcached.get("MAX_ID").toString());
 		}
@@ -100,12 +103,10 @@ public class CachedTool implements ICatch {
 	}
 	
 	private int getMaxID(){
-		if(memcached.get("MaxID")==null){
-			int maxid= baseDAO.getAllSelf(new RealActivity(), "t_realactivity").size();
-			memcached.add("MaxID",maxid);
-		}
-		Object maxID = memcached.get("MaxID");
-		return Integer.parseInt(maxID.toString());
+		int maxid= baseDAO.getAllSelf(new RealActivity(), "t_realactivity").size();
+		memcached.add("MaxID",maxid);
+		
+		return maxid;
 	}
 	
 	private String getLocationKey(int id){
