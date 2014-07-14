@@ -38,7 +38,7 @@ public class CachedTool implements ICatch {
 			if(memcached.get(key)!=null){
 				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)memcached.get(key));
 				vos.add(vo);
-				//	memcached.delete(key);
+				memcached.delete(key);
 			}else{
 				RealActivity ra = baseDAO.get(new RealActivity(), currentMaxID);
 				RealActionVO vo = new RealActionVO();

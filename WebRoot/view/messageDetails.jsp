@@ -103,6 +103,37 @@ div{float:left;line-height:25px;color:red}
 .photo{position:relative;width:50px;height:50px;float:left;margin:0 50px;}
 .photo span{width:50px;height:50px;display:block;position:absolute;top:0;left:0;background: url(head_bg.png) no-repeat;}
 .photo img{border:none;padding:0;}
+
+.rating_box .rating_body {
+width: 340px;
+position: relative;
+}
+
+.fl {
+float: left;
+display: inline;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+margin: 0;
+padding: 0;
+vertical-align: baseline;
+}
+
+::selection {
+background: #333;
+color: white;
+text-shadow: none;
+}
+.article .body {
+font-size: 14px;
+}
+html {
+font-family: "Microsoft YaHei",Tahoma,Verdana,"SimSun","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+font-size: 12px;
+}
+html {
+color: #000;
+}
 </style>
   </head>
   
@@ -127,5 +158,28 @@ div{float:left;line-height:25px;color:red}
 	</div>
 	
 	javascript经典效果示例\JavaScript图片特效
+	<div>
+		<div class="fl rating_body">
+                            <div class="rating_down">
+                                <ul>
+                                    <li title="垃圾中的战斗机,扣5分" data-score="-5"><a class="r-5" _hover-ignore="1">-5</a></li>
+                                    <li title="太垃圾了,扣4分" data-score="-4"><a class="r-4" _hover-ignore="1">-4</a></li>
+                                    <li title="傻冒新闻,扣3分" data-score="-3"><a class="r-3" _hover-ignore="1">-3</a></li>
+                                    <li title="差劲,扣2分" data-score="-2"><a class="r-2" _hover-ignore="1">-2</a></li>
+                                    <li title="不怎么样,扣1分" data-score="-1"><a class="r-1" _hover-ignore="1">-1</a></li>
+                                    <li title="平淡,0分" data-score="0"><a class="r0" _hover-ignore="1">0</a></li>
+                                </ul>
+                            </div>
+                            <div class="rating_up">
+                                <ul>
+                                    <li title="凑合吧,1分" data-score="1"><a class="r1" _hover-ignore="1">1</a></li>
+                                    <li title="还可以,2分" data-score="2"><a class="r2">2</a></li>
+                                    <li title="很不错,3分" data-score="3"><a class="r3">3</a></li>
+                                    <li title="太棒了,4分" data-score="4"><a class="r4">4</a></li>
+                                    <li title="太有才了,满分!" data-score="5"><a class="r5" _hover-ignore="1">5</a></li>
+                                </ul>
+                            </div>
+                        </div>
+	</div>
   </body>
 </html>
