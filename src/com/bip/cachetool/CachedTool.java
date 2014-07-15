@@ -12,6 +12,7 @@ import com.bip.bean.CacheKey;
 import com.bip.bean.Location;
 import com.bip.bean.Picture;
 import com.bip.bean.RealActivity;
+import com.bip.source.ResourceMessage;
 import com.bip.utils.JsonStrHandler;
 import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
@@ -83,16 +84,43 @@ public class CachedTool implements ICatch {
 		return vos;
 	}
 	
-	/**通过缓存取出所有缓存键，然后再缓存建中查找符合条件的数据。
+	/**通search the result by get the cache key
 	 * */
 	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID,int slidingDirections,int activityType) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
-		List<CacheKey> CacheKeyVOs = getCachedKeys();
-		
+		List<CacheKey> searchKeys = getTheSearchKeys(city,activityType,currentMaxID,slidingDirections);
+		for(CacheKey key :searchKeys){
+			Object obj = memcached.get(getRealActivityKey(key));
+			if(obj!=null){
+				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)obj);
+				vos.add(vo);
+			}
+		}
 		return vos;
 	}
 
 	
+	private List<CacheKey> getTheSearchKeys(String city, int activityType,int currentMaxID,int slidingDirections) {
+		List<CacheKey> CacheKeyVOs = getCachedKeys();
+		List<CacheKey> searchKeys = new ArrayList<CacheKey>();
+		if(slidingDirections==0){//0 show the message run right
+			for(int i=currentMaxID;i<CacheKeyVOs.size();i++){
+				if(CacheKeyVOs.get(i).getProperty1().equals(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
+					searchKeys.add(CacheKeyVOs.get(i));
+					if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+				}
+			}
+		}else{
+			for(int i=currentMaxID;i>0;i--){
+				if(CacheKeyVOs.get(i).getProperty1().equals(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
+					searchKeys.add(CacheKeyVOs.get(i));
+					if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+				}
+			}
+		}
+		return searchKeys;
+	}
+
 	private List<CacheKey> getCachedKeys() {
 		List<CacheKey> vos;
 		if(memcached.get(getCachedKeyKeys())!=null){
@@ -120,6 +148,13 @@ public class CachedTool implements ICatch {
 	
 	public String getRealActivityMaxKey(){
 		return "realactivity_Max";
+	}
+	
+	/**use cacheKey 
+	 * then return the key to main 
+	 * */
+	private String getRealActivityKey(CacheKey cacheKey){
+		return "realactivity_"+cacheKey.getTypeID()+"_"+cacheKey.getProperty1()+"_"+cacheKey.getF1();
 	}
 	
 	private String getRealActivityKey(int id){
