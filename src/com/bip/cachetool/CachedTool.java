@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bip.DAO.IBaseDAO;
 import com.bip.bean.ActionType;
+import com.bip.bean.CacheKey;
 import com.bip.bean.Location;
 import com.bip.bean.Picture;
 import com.bip.bean.RealActivity;
@@ -81,8 +82,27 @@ public class CachedTool implements ICatch {
 		}
 		return vos;
 	}
+	
+	/**通过缓存取出所有缓存键，然后再缓存建中查找符合条件的数据。
+	 * */
+	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID,int slidingDirections,int activityType) {
+		List<RealActionVO> vos = new ArrayList<RealActionVO>();
+		List<CacheKey> CacheKeyVOs = getCachedKeys();
+		
+		return vos;
+	}
 
 	
+	private List<CacheKey> getCachedKeys() {
+		List<CacheKey> vos;
+		if(memcached.get(getCachedKeyKeys())!=null){
+			vos = JsonStrHandler.convertJsonToCacheKeyObjects((String)memcached.get(getCachedKeyKeys()));
+		}else{
+			vos = baseDAO.getAllSelf(new CacheKey(), "t_cachedkey");
+		}
+		return vos;
+	}
+
 	public int getRealActivityMaxID() {
 		// TODO Auto-generated method stub
 		int result=0;
@@ -92,6 +112,10 @@ public class CachedTool implements ICatch {
 			result = Integer.parseInt( memcached.get("MAX_ID").toString());
 		}
 		return result ;
+	}
+	
+	private String getCachedKeyKeys(){
+		return "realactivity_cachedkeys";
 	}
 	
 	public String getRealActivityMaxKey(){

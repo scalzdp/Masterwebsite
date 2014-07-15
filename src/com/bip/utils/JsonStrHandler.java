@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bip.bean.CacheKey;
 import com.bip.bean.Location;
 import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
@@ -104,5 +105,13 @@ public class JsonStrHandler {
 		}
 		vo.setPicturevos(picturevos);
 		return vo;
+	}
+	
+	public static List<CacheKey> convertJsonToCacheKeyObjects(String jsonString){
+		List<CacheKey> cacheKeys = new ArrayList<CacheKey>();
+		JSONArray jsonArray = JSONArray.fromObject(jsonString);
+		JSONObject jsonObj = JSONObject.fromObject(jsonArray.get(0));
+		
+		return cacheKeys;
 	}
 }
