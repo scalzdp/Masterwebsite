@@ -30,7 +30,8 @@ public class RealActionService {
 //			vos.add(vo);
 //		}
 		
-		vos = cached.searchFromCached(page, rows, city, currentMaxID,slidingDirection);
+		//vos = cached.searchFromCached(page, rows, city, currentMaxID,slidingDirection);
+		vos = cached.searchFromCached(city, currentMaxID, slidingDirection, 1);
 		return vos;
 	}
 }

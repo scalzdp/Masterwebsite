@@ -269,7 +269,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var row=4;
 	//初始化数据
 	function initData(){
-		ajaxPost(0,4,0,1);
+		ajaxPost(0,4,0,0);
 	}
 	//停止向上
 	function StopUp(){

@@ -110,8 +110,19 @@ public class JsonStrHandler {
 	public static List<CacheKey> convertJsonToCacheKeyObjects(String jsonString){
 		List<CacheKey> cacheKeys = new ArrayList<CacheKey>();
 		JSONArray jsonArray = JSONArray.fromObject(jsonString);
-		JSONObject jsonObj = JSONObject.fromObject(jsonArray.get(0));
-		
+		for(int i=0;i<jsonArray.size();i++){
+			CacheKey ckey = new CacheKey();
+			JSONObject jsonObjs = JSONObject.fromObject(jsonArray.get(i));
+			ckey.setId(jsonObjs.getInt("id"));
+			ckey.setDataMark(jsonObjs.getInt("dataMark"));
+			ckey.setF1(jsonObjs.getInt("f1"));
+			ckey.setProperty1(jsonObjs.getString("property1"));
+			ckey.setProperty2(jsonObjs.getString("property2"));
+			ckey.setProperty3(jsonObjs.getString("property3"));
+			ckey.setProperty4(jsonObjs.getString("property4"));
+			ckey.setTypeID(jsonObjs.getInt("typeID"));
+			cacheKeys.add(ckey);
+		}
 		return cacheKeys;
 	}
 }

@@ -86,15 +86,40 @@ public class CachedTool implements ICatch {
 	
 	/**ͨsearch the result by get the cache key
 	 * */
-	public List<RealActionVO> searchFromCached(int page, int rows, String city,int currentMaxID,int slidingDirections,int activityType) {
+	public List<RealActionVO> searchFromCached(String city,int currentMaxID,int slidingDirections,int activityType) {
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
 		List<CacheKey> searchKeys = getTheSearchKeys(city,activityType,currentMaxID,slidingDirections);
 		for(CacheKey key :searchKeys){
 			Object obj = memcached.get(getRealActivityKey(key));
+			RealActionVO vo = new RealActionVO();
 			if(obj!=null){
-				RealActionVO vo = JsonStrHandler.convertJSONTOObject((String)obj);
+				vo =JsonStrHandler.convertJSONTOObject((String)obj);
+				vos.add(vo);
+			}else{
+				RealActivity ra = baseDAO.get(new RealActivity(), key.getF1());
+				List<PictureVO> picturevos = new ArrayList<PictureVO>();
+				for(Picture p:baseDAO.queryFactory(new Picture(), "t_picture", " and isMain=1 and realActivityId="+ra.getId())){
+					PictureVO picturevo = new PictureVO();
+					picturevo.setId(p.getId());
+					picturevo.setIsMain(p.getIsMain());
+					picturevo.setPicMaxPath(p.getPicMaxPath());
+					picturevo.setRealActivityId(p.getRealActivityId());
+					picturevos.add(picturevo);
+				}
+				Location location = baseDAO.get(new Location(), ra.getLocationId());
+				ActionType actiontype = baseDAO.get(new ActionType(), ra.getActiontypeid());
+				vo.setActiontypename(actiontype.getName());
+				vo.setDateTime(ra.getDateTime().toString());
+				vo.setDescription(ra.getDiscription());
+				vo.setLatitude(location.getLatitude());
+				vo.setLongitude(location.getLongitude());
+				vo.setRealactivityID(ra.getId());
+				vo.setTelephone(ra.getTelephone());
+				vo.setPicturevos(picturevos);
+				memcached.add(getRealActivityKey(key), JsonStrHandler.convertObjectToJson(vo));
 				vos.add(vo);
 			}
+			
 		}
 		return vos;
 	}
@@ -105,7 +130,7 @@ public class CachedTool implements ICatch {
 		List<CacheKey> searchKeys = new ArrayList<CacheKey>();
 		if(slidingDirections==0){//0 show the message run right
 			for(int i=currentMaxID;i<CacheKeyVOs.size();i++){
-				if(CacheKeyVOs.get(i).getProperty1().equals(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
+				if(CacheKeyVOs.get(i).getProperty1().contains(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
 					searchKeys.add(CacheKeyVOs.get(i));
 					if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
 				}
@@ -123,10 +148,12 @@ public class CachedTool implements ICatch {
 
 	private List<CacheKey> getCachedKeys() {
 		List<CacheKey> vos;
-		if(memcached.get(getCachedKeyKeys())!=null){
+		String obj = memcached.get(getCachedKeyKeys()).toString();
+		if(!obj.toString().equals("[]")){
 			vos = JsonStrHandler.convertJsonToCacheKeyObjects((String)memcached.get(getCachedKeyKeys()));
 		}else{
 			vos = baseDAO.getAllSelf(new CacheKey(), "t_cachedkey");
+			memcached.replace(getCachedKeyKeys(), JsonStrHandler.convertObjectToJson(vos));
 		}
 		return vos;
 	}

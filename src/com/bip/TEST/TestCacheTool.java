@@ -19,7 +19,7 @@ public class TestCacheTool extends TestCase{
 	public void testsearchFromCached(){
 		int page=0,rows=4,currentMaxID=0;
 		String city="�ɶ�";
-		List<RealActionVO> vos = cached.searchFromCached(page, rows, city, currentMaxID);
+		//List<RealActionVO> vos = cached.searchFromCached(page, rows, city, currentMaxID);
 		
 	}
 	
@@ -38,7 +38,7 @@ public class TestCacheTool extends TestCase{
 	
 	public void testSearchFromCached(){
 		try{
-			cached.searchFromCached(0, 4, "ctu", 2);
+			//cached.searchFromCached(0, 4, "ctu", 2);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
