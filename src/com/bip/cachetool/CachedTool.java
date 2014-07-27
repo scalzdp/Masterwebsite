@@ -148,8 +148,7 @@ public class CachedTool implements ICatch {
 
 	private List<CacheKey> getCachedKeys() {
 		List<CacheKey> vos;
-		String obj = memcached.get(getCachedKeyKeys()).toString();
-		if(!obj.toString().equals("[]")){
+		if(memcached.get(getCachedKeyKeys())!=null){
 			vos = JsonStrHandler.convertJsonToCacheKeyObjects((String)memcached.get(getCachedKeyKeys()));
 		}else{
 			vos = baseDAO.getAllSelf(new CacheKey(), "t_cachedkey");
