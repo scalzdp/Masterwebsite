@@ -17,9 +17,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		#img-display
 		{
-		width: 100%;height: 35%;overflow: hidden;margin:0;float:left;border-right:1px solid red;
+		width: 62%;height: 100%;overflow: hidden;margin:0;float:left;border-right:1px solid red;
+		background: url(Img/waite-for-you.png)  no-repeat;
 		}
-		#map-display{width: 100%;height: 50%; position:relative; left:10px; float:right;overflow: hidden;margin:0;}
+		#map-display{width: 37%; position:relative; left:10px; float:right;height: 100%;overflow: hidden;margin:0;}
 		body
         {
             font-family: Arial, Verdana, 宋体;
@@ -103,12 +104,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         .j_boxcontent .pre
         {
             left: 0;
-            background: url(Img/IndexPic/images/left.jpg) center #e4e3e3 no-repeat;
+            background: url(http://img11.360buyimg.com/da/g15/M05/0E/1D/rBEhWVJYvZcIAAAAAAABcTqRek0AAEDJwP__hgAAAHo228.png) center #e4e3e3 no-repeat;
         }
         .j_boxcontent .next
         {
             right: 0;
-            background: url(Img/IndexPic/images/right.jpg) center #e4e3e3 no-repeat;
+            background: url(http://img14.360buyimg.com/da/g15/M02/0E/1C/rBEhWFJYq_wIAAAAAAABtzX8mYMAAECzQP__h8AAAHh954.png) center #e4e3e3 no-repeat;
         }
         .clearfix
         {
@@ -249,7 +250,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</style>
 	<link rel="stylesheet" href="css/citySelector.css" type="text/css"></link>
 	<style>
-	
+	.cityinput{
+            border-width: 1px;
+            border-style:none;
+            height: 24px;
+            line-height: 24px;
+            width: 70px;
+            font-size: 12px;
+            font-family: Verdana, Arial, Sans-serif;
+            padding-left: 2px;
+            background: url(Img/select.png) no-repeat 150px 5px;
+            }
             #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;float:left;}
 	</style>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -344,50 +355,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
     </script>
-    <style>
-    .loginPic{
-   		float :left ;
-   		margin-left:1cm;
-    	background: url(Img/IndexPic/images/login.jpg) left no-repeat;
-        width:40px;
-        height:16px;
-        display:block;
-        overflow:hidden;
-    }
-    .login{
-    	float:left;
-    }
-    .search_city{
-    	margin-left:1cm;
-    	float:left;
-    }
-    .cityinput{
-            width: 170px;
-			height: 20px;
-			margin: 2px 0 2px 5px;
-			padding: 2px 3px;
-			border: solid 1px #CCC;
-			background: white url(http://csdnimg.cn/www/images/ico_sear_top.gif) no-repeat 150px 2px;
-			color: #999;
-			line-height: 14px;
-			vertical-align: middle;
-            }
-    </style>
   </head>
   
   <body onload="initData()">
   	<div id="head-line">
-  		<div class="login">
-  		<a class="loginPic"  href="javascript:void(0);"></a>
-  		<a href="javascript:void(0);">登录</a>
-  		</div>
-  		<div class="search_city">
-	  		<input type="text" class="cityinput" id="citySelect" value="城市名">
-	    	<script type="text/javascript" src="js/citySelector.js"></script>
-	    	<script type="text/javascript">
-	    		var test=new Vcity.CitySelector({input:'citySelect'});
-			</script>
-		</div>
+  		<input type="text" class="cityinput" id="citySelect" value="城市名">
+    	<script type="text/javascript" src="js/citySelector.js"></script>
+    	<script type="text/javascript">
+    		var test=new Vcity.CitySelector({input:'citySelect'});
+		</script>
   	</div>
   	<div id="body-context">
     	<div id="img-display" >
