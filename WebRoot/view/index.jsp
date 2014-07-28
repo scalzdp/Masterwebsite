@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+    <%@ page import="com.bip.vo.UserVO" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -17,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		#img-display
 		{
-		width: 100%;height: 35%;overflow: hidden;margin:0;float:left;border-right:1px solid red;
+		width: 100%;overflow: hidden;margin:0;float:left;position:relative; top:2px;
 		}
 		#map-display{width: 100%;height: 50%; position:relative; left:10px; float:right;overflow: hidden;margin:0;}
 		body
@@ -67,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         .j_box
         {
         	position: relative;
-            width: 100%;
+            width: 996px;
             height: 220px;
             border: 2px solid #C91521;
             padding: 0;
@@ -103,12 +104,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         .j_boxcontent .pre
         {
             left: 0;
-            background: url(Img/IndexPic/images/left.jpg) center #e4e3e3 no-repeat;
+            background: url(Img/IndexPic/images/left.png) center #e4e3e3 no-repeat;
         }
         .j_boxcontent .next
         {
             right: 0;
-            background: url(Img/IndexPic/images/right.jpg) center #e4e3e3 no-repeat;
+            background: url(Img/IndexPic/images/right.png) center #e4e3e3 no-repeat;
         }
         .clearfix
         {
@@ -238,12 +239,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             font-style: normal;
         }
         #head-line{
-        	width:100%;
+        	width:1000px;
         	hight:5%;
+        	margin:0 auto;
         }
         #body-context{
-        	width:100%;
+        	width:1000px;
         	hight:95%;
+        	margin:0 auto;
         }
         
 	</style>
@@ -361,6 +364,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	margin-left:1cm;
     	float:left;
     }
+    
     .cityinput{
             width: 170px;
 			height: 20px;
@@ -372,6 +376,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			line-height: 14px;
 			vertical-align: middle;
             }
+            .title{
+            	float :left ;
+            	background-image:url(Img/IndexPic/images/title.jpg) left no-repeat;
+            	width:1000px;
+        		height:50px;
+        		display:block;
+            }
+            .space{
+            	float :left ;
+            	width:500px;
+        		height:20px;
+            }
     </style>
   </head>
   
@@ -379,8 +395,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div id="head-line">
   		<div class="login">
   		<a class="loginPic"  href="javascript:void(0);"></a>
-  		<a href="javascript:void(0);">登录</a>
+  		<%UserVO loginvo = (UserVO)request.getAttribute("costomer_session_key"); %>
+  		<%if (loginvo==null){ %>
+  			<a href="javascript:void(0);">登录</a>
+  		<%} else{ %>
+  		
+  		<%} %>
   		</div>
+  		<div class="space"></div>
   		<div class="search_city">
 	  		<input type="text" class="cityinput" id="citySelect" value="城市名">
 	    	<script type="text/javascript" src="js/citySelector.js"></script>
@@ -388,6 +410,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		var test=new Vcity.CitySelector({input:'citySelect'});
 			</script>
 		</div>
+		<div class="title"><img src="Img/IndexPic/images/title.jpg"></div>
   	</div>
   	<div id="body-context">
     	<div id="img-display" >
