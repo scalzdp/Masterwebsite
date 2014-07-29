@@ -389,7 +389,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			vertical-align: middle;
             }
             .title{
-            	float :left ;
             	background-image:url(Img/IndexPic/images/title.jpg) left no-repeat;
             	width:1000px;
         		height:50px;
@@ -574,8 +573,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	           <form class="theme-signin" name="loginform" action="clogin" method="post">
 	                <ol>
 	                     <li><h4>请登录！</h4></li>
-	                     <li><strong>用户名：</strong><input class="ipt" placeholder="登录邮箱" type="text" name="log" value="" size="20" /></li>
-	                     <li><strong>密码：</strong><input class="ipt" placeholder="输入密码" type="password" name="pwd" value="" size="20" /></li>
+	                     <li><strong>用户名：</strong><input class="ipt" placeholder="登录邮箱" type="text" name="userEmail" value="" size="20" /></li>
+	                     <li><strong>密码：</strong><input class="ipt" placeholder="输入密码" type="password" name="password" value="" size="20" /></li>
 	                     <li><input class="btn btn-primary" type="submit" name="submit" value=" 登 录 " />&nbsp;<a href="register" target="_self"> 注 册 </a></li>
 	                </ol>
 	           </form>

@@ -1,6 +1,8 @@
 package com.bip.Controller;
 
+import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bip.Service.RealActionService;
+import com.bip.source.ResourceMessage;
 import com.bip.utils.JsonStrHandler;
 import com.bip.vo.UserVO;
 
@@ -20,9 +23,12 @@ public class ActiveController {
 	private RealActionService actionService;
 	
 	@RequestMapping(value="Index",method=RequestMethod.GET)
-	private String getDisplayPage(Model model){
-		//UserVO vo = new UserVO();
-		//model.addAttribute("costomer_session_key", vo);
+	private String getDisplayPage(Model model,HttpSession session){
+		Object obj =  session.getAttribute(ResourceMessage.CUSTOMERSESSION);
+		if(obj!=null){
+			UserVO vo =(UserVO) obj;
+			model.addAttribute("costomer_session_key", vo);
+		}
 		return "index";
 	}
 	
@@ -33,7 +39,7 @@ public class ActiveController {
 		rows = Integer.parseInt(request.getParameter("rows"));
 		currentMaxID = Integer.parseInt(request.getParameter("currentMax"));
 		slidingDirection = Integer.parseInt(request.getParameter("SlidingDirection"));
-		String city="≥…∂º";
+		String city="ÊàêÈÉΩ";
 		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID,slidingDirection));
 		request.setAttribute("jsonData", jsonData);
 		return "json";
