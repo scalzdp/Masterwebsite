@@ -3,7 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-    <%@ page import="com.bip.vo.UserVO" %>
+<%@ page import="com.bip.vo.UserVO" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -357,6 +357,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         display:block;
         overflow:hidden;
     }
+    .history{
+    	float:left;
+    	margin-left:1cm;
+    	background:url(Img/step.jpg) left no-repeat;
+    	width:40px;
+    	height:16px;
+    	display:block;
+    	overflow:hidden;
+    }
+    .customer-name{
+    	float:left;
+    }
     .login{
     	float:left;
     }
@@ -397,9 +409,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<a class="loginPic"  href="javascript:void(0);"></a>
   		<%UserVO loginvo = (UserVO)request.getAttribute("costomer_session_key"); %>
   		<%if (loginvo==null){ %>
-  			<a href="javascript:void(0);">登录</a>
+  			<a href="javascript:void(0);" class="theme-login">登录</a>
   		<%} else{ %>
-  		
+  			<a href="javascript:void(0);" class="customer-name">name</a>
+  			<a href="javascript:void(0);" class="history" onclick="gotoHistory()" title="我的脚印"></a>
   		<%} %>
   		</div>
   		<div class="space"></div>
@@ -413,6 +426,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="title"><img src="Img/IndexPic/images/title.jpg"></div>
   	</div>
   	<div id="body-context">
+  		<div><img src="Img/IndexPic/images/LatestPromotions.jpg"></div>
     	<div id="img-display" >
     		<div class="j_box">
 			    <div class="j_boxcontent">
@@ -459,9 +473,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        </div>
 			        <a onmouseup="StopDown()" class="next" onmousedown="GoDown()" onmouseout="StopDown()" href="javascript:void(0);"></a>
 			    </div>
-			    
 			</div>
-			  
     	</div>
     	<div id="map-display">
     		hello right
@@ -539,5 +551,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		</script>
     	</div>
     </div>
+    <link rel="stylesheet" href="css/popLogin.css" media="all">
+    <script>
+	jQuery(document).ready(function($) {
+		$('.theme-login').click(function(){
+			$('.theme-popover-mask').fadeIn(100);
+			$('.theme-popover').slideDown(200);
+		})
+		$('.theme-poptit .close').click(function(){
+			$('.theme-popover-mask').fadeOut(100);
+			$('.theme-popover').slideUp(200);
+		})
+	
+	})
+	</script>
+	<div class="theme-popover">
+	     <div class="theme-poptit">
+	          <a href="javascript:;" title="关闭" class="close">×</a>
+	          <h3>登录 是一种态度</h3>
+	     </div>
+	     <div class="theme-popbod dform">
+	           <form class="theme-signin" name="loginform" action="clogin" method="post">
+	                <ol>
+	                     <li><h4>请登录！</h4></li>
+	                     <li><strong>用户名：</strong><input class="ipt" placeholder="登录邮箱" type="text" name="log" value="" size="20" /></li>
+	                     <li><strong>密码：</strong><input class="ipt" placeholder="输入密码" type="password" name="pwd" value="" size="20" /></li>
+	                     <li><input class="btn btn-primary" type="submit" name="submit" value=" 登 录 " />&nbsp;<a href="register" target="_self"> 注 册 </a></li>
+	                </ol>
+	           </form>
+	     </div>
+	</div>
+	<div class="theme-popover-mask"></div>
   </body>
 </html>

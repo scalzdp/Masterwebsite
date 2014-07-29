@@ -16,7 +16,7 @@ public class MemcachedTools {
 	 
 	static{
 		//server list and its weight
-		String[] servers={"127.0.0.1:11211"};
+		String[] servers={"172.18.19.48:11211"};
 		Integer[] weights={3};
 		
 		//get the socket  connection pool instance
