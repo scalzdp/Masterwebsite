@@ -35,7 +35,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
-                            <form  action="clogin" autocomplete="on"> 
+                            <form  action="clogin" method="post" autocomplete="on"> 
                                 <h1>登 陆</h1> 
                                 <p> 
                                     <label for="username" class="uname" data-icon="e" > 邮箱 </label>
@@ -60,7 +60,7 @@
                         </div>
 
                         <div id="register" class="animate form">
-                            <form  action="register" autocomplete="on"> 
+                            <form  action="register" method="post" autocomplete="on"> 
                                 <h1> 注 册 </h1> 
                                 <p> 
                                     <label for="usernamesignup" class="uname" data-icon="u">用户名</label>

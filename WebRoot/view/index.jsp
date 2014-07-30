@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>欢迎观看</title>
+    <title>周围发生了什么</title>
 
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -410,7 +410,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<%if (loginvo==null){ %>
   			<a href="javascript:void(0);" class="theme-login">登录</a>
   		<%} else{ %>
-  			<a href="javascript:void(0);" class="customer-name">name</a>
+  			<a href="javascript:void(0);" class="customer-name"><%=loginvo.getName() %></a>
   			<a href="javascript:void(0);" class="history" onclick="gotoHistory()" title="我的脚印"></a>
   		<%} %>
   		</div>

@@ -29,7 +29,7 @@ public class UserController {
 		UserVO vo = customerService.getLoginUser(loginVO);
 		if( vo !=null){
 			session.setAttribute(ResourceMessage.CUSTOMERSESSION, vo);
-			return "";
+			return "redirect:Index";
 		}else{
 			return "";
 		}
@@ -42,6 +42,11 @@ public class UserController {
 	
 	@RequestMapping(value="register",method=RequestMethod.POST)
 	private String postRegister(Model model,@ModelAttribute("form") UserVO loginVO){
-		return "";
+		if(customerService.queryEmailRepeatTimes(loginVO)){
+			customerService.registerUser(loginVO);
+			return "redirect:Index";
+		}else{
+			return "";
+		}
 	}
 }
