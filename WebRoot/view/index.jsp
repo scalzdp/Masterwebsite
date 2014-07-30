@@ -411,7 +411,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<a href="javascript:void(0);" class="theme-login">登录</a>
   		<%} else{ %>
   			<a href="javascript:void(0);" class="customer-name"><%=loginvo.getName() %></a>
-  			<a href="javascript:void(0);" class="history" onclick="gotoHistory()" title="我的脚印"></a>
+  			<a href="mystep" class="history" onclick="gotoHistory()" title="我的脚印"></a>
   		<%} %>
   		</div>
   		<div class="space"></div>

@@ -39,7 +39,7 @@ public class ActiveController {
 		rows = Integer.parseInt(request.getParameter("rows"));
 		currentMaxID = Integer.parseInt(request.getParameter("currentMax"));
 		slidingDirection = Integer.parseInt(request.getParameter("SlidingDirection"));
-		String city="≥…∂º";
+		String city="ÊàêÈÉΩ";
 		String jsonData =JsonStrHandler.convertObjectToJson(actionService.getActionVO(page, rows,city,currentMaxID,slidingDirection));
 		request.setAttribute("jsonData", jsonData);
 		return "json";

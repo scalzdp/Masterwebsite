@@ -41,12 +41,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="register",method=RequestMethod.POST)
-	private String postRegister(Model model,@ModelAttribute("form") UserVO loginVO){
+	private String postRegister(Model model,@ModelAttribute("form") UserVO loginVO ,HttpSession session){
 		if(customerService.queryEmailRepeatTimes(loginVO)){
 			customerService.registerUser(loginVO);
+			session.setAttribute(ResourceMessage.CUSTOMERSESSION, loginVO);
 			return "redirect:Index";
 		}else{
 			return "";
 		}
+	}
+	
+	@RequestMapping(value="mystep",method=RequestMethod.GET)
+	private String getMyStep(Model model){
+		return "person/mystep";
 	}
 }
