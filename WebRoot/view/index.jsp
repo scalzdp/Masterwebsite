@@ -386,6 +386,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     
     .cityinput{
+    		float:left;
             width: 170px;
 			height: 20px;
 			margin: 2px 0 2px 5px;
@@ -406,6 +407,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	float :left ;
             	width:500px;
         		height:20px;
+            }
+            .search-type{
+            	float:left;
+            	margin: 2px 0 0px 2px;
+		    	background:url(Img/IndexPic/images/search.png) left no-repeat;
+		    	width:40px;
+		    	height:20px;
+		    	display:block;
+		    	overflow:hidden;
             }
     </style>
   </head>
@@ -429,6 +439,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<script type="text/javascript">
 	    		var test=new Vcity.CitySelector({input:'citySelect'});
 			</script>
+			<a href="javascript:void(0);" class="search-type"></a>
 		</div>
 		<div class="title"><img src="Img/IndexPic/images/title.jpg"></div>
   	</div>
