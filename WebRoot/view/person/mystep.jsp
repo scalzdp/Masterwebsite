@@ -19,10 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+	<script>
+	function returnback(){
+		history.back();
+	}
+	</script>
   </head>
   
   <body>
+  <a href="javascript:void(0);" onclick="returnback()">回主页</a>
     欢迎
   </body>
 </html>

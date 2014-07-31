@@ -261,7 +261,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var row=4;
 	//初始化数据
 	function initData(){
-		ajaxPost(0,4,0,0);
+		ajaxPost(0,4,0,0,"");
 	}
 	//停止向上
 	function StopUp(){
@@ -272,7 +272,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		if(page>=0){
 			var max=get_Max_leaf();
-			ajaxPost(page,row,max,0);
+			var city = test.input.value;
+			if(city=="城市名"){
+				city="";
+			}
+			ajaxPost(page,row,max,0,city);
 			page=page-1;
 		}
 	}
@@ -284,15 +288,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function GoDown(){
 		page=page+1;
 		var min=get_Min_leaf();
-		ajaxPost(page,row,min,1);
+		var city = test.input.value;
+		if(city=="城市名"){
+			city="";
+		}
+		ajaxPost(page,row,min,1,city);
 	}
 	//ajax请求翻页数据
-	function ajaxPost(page,row,id,type){
+	function ajaxPost(page,row,id,type,city){
 		$.ajax({
 			type:"post",
 			url:"./getMessage",
 			dataType:"json",
-			data:{pages:page,rows:row,currentMax:id,SlidingDirection:type},
+			data:{pages:page,rows:row,currentMax:id,SlidingDirection:type,City:city},
 			success:function(data){
 				if(!$.isEmptyObject(data)){
 					//TODO:创建新的li节点数据，然后把新创建的li节点拼接到ul下面。成功之后把原有显示的li节点移除。
@@ -316,7 +324,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var l in data){
 		    //将所有的节点创建放入cc中
 		    var img='test.jpg';
-			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="#" title="'+data[l].description+'">');
+			cc.push('<li onclick=select(this) title='+data[l].latitude+','+data[l].longitude+'><a href="javascript:void(0);" title="'+data[l].description+'">');
 			cc.push('<div class="p_img"><sub class="p_img_tag" id="zk_564004" style="display:none">'+data[l].realactivityID+'</sub>');
 			if(data[l].picturevos.length!=0){
 				cc.push('<img src="/Img/'+data[l].picturevos[0].picMaxPath+'">');

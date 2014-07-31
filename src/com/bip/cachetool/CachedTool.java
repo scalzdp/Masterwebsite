@@ -130,21 +130,49 @@ public class CachedTool implements ICatch {
 		List<CacheKey> searchKeys = new ArrayList<CacheKey>();
 		if(slidingDirections==0){//0 show the message run right
 			for(int i=currentMaxID;i<CacheKeyVOs.size();i++){
-				if(CacheKeyVOs.get(i).getProperty1().contains(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
-					searchKeys.add(CacheKeyVOs.get(i));
-					if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+				CacheKey ck = getCacheKeyFromCacheKeyVOs(CacheKeyVOs,i);
+				if(ck==null)continue;
+				if(city.length()!=0){
+					if(ck.getProperty1().contains(city)&&ck.getTypeID().equals(activityType)){
+						searchKeys.add(ck);
+						if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+					}
+				}else{
+					if(ck.getTypeID().equals(activityType)){
+						searchKeys.add(ck);
+						if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+					}
 				}
 			}
 		}else{
 			for(int i=currentMaxID;i>0;i--){
-				if(CacheKeyVOs.get(i).getProperty1().equals(city)&&CacheKeyVOs.get(i).getTypeID().equals(activityType)){
-					searchKeys.add(CacheKeyVOs.get(i));
-					if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+				CacheKey ck = getCacheKeyFromCacheKeyVOs(CacheKeyVOs,i);
+				if(ck==null)continue;
+				if(city.length()!=0){
+					if(ck.getProperty1().equals(city)&&ck.getTypeID().equals(activityType)){
+						searchKeys.add(ck);
+						if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+					}
+				}else{
+					if(ck.getTypeID().equals(activityType)){
+						searchKeys.add(ck);
+						if(searchKeys.size()==ResourceMessage.PICNUMBER)break;
+					}
 				}
 			}
 		}
 		return searchKeys;
 	}
+	private CacheKey getCacheKeyFromCacheKeyVOs(List<CacheKey> CacheKeyVOs,int id){
+		if(id==0)id=1;
+		for(CacheKey ck : CacheKeyVOs){
+			if(ck.getF1().equals(id)){
+				return ck;
+			}
+		}
+		return null;
+	}
+	
 
 	private List<CacheKey> getCachedKeys() {
 		List<CacheKey> vos;
