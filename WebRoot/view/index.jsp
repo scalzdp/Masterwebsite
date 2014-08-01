@@ -354,6 +354,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#list1").append(data);
 	}
 	
+	function search_city(){
+		var min=get_Min_leaf();
+		var city = test.input.value;
+			if(city=="城市名"){
+				city="";
+			}
+		ajaxPost(page,row,min,0,city);
+	}
     </script>
     <style>
     .loginPic{
@@ -439,7 +447,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<script type="text/javascript">
 	    		var test=new Vcity.CitySelector({input:'citySelect'});
 			</script>
-			<a href="javascript:void(0);" class="search-type"></a>
+			<a href="javascript:void(0);" onclick="search_city();" class="search-type"></a>
 		</div>
 		<div class="title"><img src="Img/IndexPic/images/title.jpg"></div>
   	</div>
