@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'messageDetails.jsp' starting page</title>
+    <title>详情</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -135,11 +135,12 @@ html {
 color: #000;
 }
 </style>
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery-1.32.js"></script>
+		<script src="js/jquery.cookie.js" type="text/javascript" ></script>
   </head>
   
   <body>
-    This is my JSP page. <br>
-    title>JavaScript切换图片</title>
 	<script>
 	function showDaTu(src){
 	document.getElementById("defaultImg").src=src;
@@ -147,7 +148,7 @@ color: #000;
 	</script>
 	<img src="wall1.jpg" id="defaultImg">
 	<br><br><br>
-	<img src='Img/wall_s1.jpg' onmouseover="showDaTu('Img/wall1.jpg')">
+	<img src='Img/wall_s1.jpg' onmouseover="showDaTu('Img/returnback.jpg')">
 	<img src='Img/wall_s2.jpg' onmouseover="showDaTu('Img/wall2.jpg')">
 	<img src='Img/wall_s3.jpg' onmouseover="showDaTu('Img/wall3.jpg')">
 	<img src='Img/wall_s4.jpg' onmouseover="showDaTu('Img/wall4.jpg')">
@@ -158,28 +159,82 @@ color: #000;
 	</div>
 	
 	javascript经典效果示例\JavaScript图片特效
-	<div>
-		<div class="fl rating_body">
-                            <div class="rating_down">
-                                <ul>
-                                    <li title="垃圾中的战斗机,扣5分" data-score="-5"><a class="r-5" _hover-ignore="1">-5</a></li>
-                                    <li title="太垃圾了,扣4分" data-score="-4"><a class="r-4" _hover-ignore="1">-4</a></li>
-                                    <li title="傻冒新闻,扣3分" data-score="-3"><a class="r-3" _hover-ignore="1">-3</a></li>
-                                    <li title="差劲,扣2分" data-score="-2"><a class="r-2" _hover-ignore="1">-2</a></li>
-                                    <li title="不怎么样,扣1分" data-score="-1"><a class="r-1" _hover-ignore="1">-1</a></li>
-                                    <li title="平淡,0分" data-score="0"><a class="r0" _hover-ignore="1">0</a></li>
-                                </ul>
-                            </div>
-                            <div class="rating_up">
-                                <ul>
-                                    <li title="凑合吧,1分" data-score="1"><a class="r1" _hover-ignore="1">1</a></li>
-                                    <li title="还可以,2分" data-score="2"><a class="r2">2</a></li>
-                                    <li title="很不错,3分" data-score="3"><a class="r3">3</a></li>
-                                    <li title="太棒了,4分" data-score="4"><a class="r4">4</a></li>
-                                    <li title="太有才了,满分!" data-score="5"><a class="r5" _hover-ignore="1">5</a></li>
-                                </ul>
-                            </div>
-                        </div>
-	</div>
+	<div id="other"><h2>给文章打个分先...</h2>
+					<div id="Mark">								
+						<div class="ratingblock">
+							<div id="">
+								<ul id="" class="unit-rating" style="width: 330px;">
+								<li class="current-rating" style="width: 30px; left: 150px;">current rating</li>
+								<li><a href="javascript:rate(-5)" title="垃圾中的战斗机,扣5分 " class="r-5-unit rater">-5</a></li>
+								<li><a href="javascript:rate(-4)" title="太垃圾了,扣4分 " class="r-4-unit rater">-4</a></li>
+								<li><a href="javascript:rate(-3)" title="垃圾,扣3分 " class="r-3-unit rater">-3</a></li>
+								<li><a href="javascript:rate(-2)" title="差劲,扣2分 " class="r-2-unit rater">-2</a></li>
+								<li><a href="javascript:rate(-1)" title="不怎么样,扣1分 " class="r-1-unit rater">-1</a></li>
+								<li><a href="javascript:rate(0)" title="平淡,0分 " class="r0-unit rater">0</a></li>
+								<li><a href="javascript:rate(1)" title="凑合吧,1分 " class="r1-unit rater">1</a></li>
+								<li><a href="javascript:rate(2)" title="还可以,2分 " class="r2-unit rater">2</a></li>
+								<li><a href="javascript:rate(3)" title="很不错,3分 " class="r3-unit rater">3</a></li>
+								<li><a href="javascript:rate(4)" title="太棒了,4分 " class="r4-unit rater">4</a></li>
+								<li><a href="javascript:rate(5)" title="太有才了,满分! " class="r5-unit rater">5</a></li></ul>
+								<p style="padding-top: 25px; text-indent: 1em;">
+								</p>												
+							</div>
+						</div> 
+						<div id="RateMsg"></div>
+					</div>
+				</div>
+		<script type="text/javascript">
+		<!--
+		var url=''; //WEB路径
+		var artid =""; //传递参数
+		//alert(artid);
+
+		$(document).ready(function(){
+			$('#news').addClass('current');
+			$.getJSON(url+"ajax.php?do=init&artid="+artid+"&r="+ Math.random(),
+				function(data){
+				  $.each(data, function(i,k){
+					$("#"+i).html(k);
+					if(i == 'Rate'){
+						width = 30+Math.abs(k)*30;
+						left = k>0 ? 150 : 180-width;
+						if(k<0) $('.current-rating').css("background-position",'right bottom');
+						$('.current-rating').width(width);
+						$('.current-rating').css("left",left);
+					}
+				  });
+				});		 
+		});
+
+		function rate(j){
+			$("#rating_"+artid+">li>a").remove();			
+			if($.cookie('rate_aid_'+artid) == 1){
+				$('#RateMsg').html('您已评过分，不能重复评分。谢谢!').fadeIn('slow');
+				setTimeout(function(){
+					$("#RateMsg").hide('slow');
+				},2000);
+			}else{				
+				$.getJSON(url+"ajax.php?do=rate&artid="+artid+"&j="+j+ "&r="+Math.random(),
+					function(data){
+					  $.each(data, function(i,k){
+						$("#"+i).html(k);
+						if(i == 'Rate'){
+							width = 30+Math.abs(k)*30;
+							left = k>0 ? 150 : 180-width;
+							if(k<0) $('.current-rating').css("background-position",'right bottom');
+							$('.current-rating').width(width);
+							$('.current-rating').css("left",left);
+						}
+					  });				  
+						$('#RateMsg').html('评分成功,谢谢参与!').fadeIn('slow');
+						setTimeout(function(){
+							$("#RateMsg").hide('slow');
+						},2000);
+					});	
+			}
+		 }
+		 //-->
+	</script>
+				</script>
   </body>
 </html>

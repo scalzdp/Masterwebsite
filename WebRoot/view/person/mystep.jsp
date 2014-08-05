@@ -30,6 +30,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	hight:95%;
         	margin:0 auto;
 	}
+	.top{
+        	width:1000px;
+        	hight:5%;
+        	margin:0 auto;
+	}
 	.tr-td td {
 	    padding-top: 10px;
 	    vertical-align: top;
@@ -58,6 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     border-color: -moz-use-text-color #e6e6e6 #e6e6e6;
     border-image: none;
     border-right: 1px solid #e6e6e6;
+    border-left: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
     border-style: none solid solid;
     border-width: medium 1px 1px;
 }
@@ -73,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     color: #333333;
     float: left
     margin-bottom: 10px;
-     height: 100em;
+     height: 70%;
     overflow: hidden;
 }
 .tb-void td {
@@ -110,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 .message{
     overflow: hidden;
-    width: 80px;
+    width: 180px;
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -131,18 +138,56 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     position: relative;
     z-index: 3;
 }
+.tr-th td {
+    text-align: left;
+}
+.tr-th span {
+    display: inline-block;
+    float: left;
+    height: 24px;
+    line-height: 23px;
+    margin-right: 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+}
+.tr-th {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #f9f9f9;
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+}
+.tr-th span.tcol4 {
+    color: #666666;
+    float: right;
+    width: 170px;
+}
+.tr-th td, .tr-split td {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+
 	</style>
   </head>
   
   <body>
-  <a href="javascript:void(0);" onclick="returnback()">回主页</a>
+  <div class="top">
+  	<a href="javascript:void(0);" onclick="returnback()">
+		<img src="Img/returnback.jpg"/>
+	</a>
+  </div>
     <div class="history w main">
 	    <div class="m m5">
 		    <div class="mt">
 		    	<ul class="taborder">
 		    		<li class="">
 		    			<div class="tyies-t">
-		    				<strong class="ftx-04">全部订单</strong>
+		    				<strong class="ftx-04">全部记录</strong>
 		    				<s></s>
 							<b></b>
 		    			</div>
@@ -152,62 +197,103 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <div class="mc">
 			    <div class="tb-void">
 			    	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
-			    	<tr>
-	<th width="286">订单信息</th>
-	<th width="80">收货人</th>
-	<th width="110">应付金额</th>
-	<th width="100">
-		<select class="sele" name="" id="submitDate">
-			<option selected="" value="0">全部时间</option>
-			<option value="1">最近三个月</option>
-			<option value="2">今年内</option>
-			<option value="9">2013年</option>
-			<option value="8">2012年</option>
-			<option value="3">2011年</option>
-			<option value="4">2010年</option>
-			<option value="5">2009年</option>
-			<option value="6">2008年</option>
-			<option value="7">2008年以前</option>
-		</select>
-	</th>
-	<th width="100">
-		<select class="sele" name="" id="orderState">
-			<option selected="" value="4096">全部状态</option>
-			<option value="1">等待付款</option>
-			<option value="32">等待自提</option>
-			<option value="128">等待收货</option>
-			<!-- <option value="0">处理中</option> -->
-			<!--<option value="2048">有效</option> -->
-			
-			<option value="1024">已完成</option>
-			<option value="-1">已取消</option>
-		</select>
-	</th>
-	<th width="128">操作</th>
-	</tr>
+			    	<tr class="tr-th">
+			<th width="286">浏览信息</th>
+			<th width="180">介绍</th>
+			<th width="100">
+				<select class="sele" name="" id="orderState">
+					<option selected="" value="4096">全部分数</option>
+					<option value="5">满分评价</option>
+					<option value="4">4分评价</option>
+					<option value="3">3分评价</option>
+					<option value="2">2分评价</option>
+					<option value="1">1分评价</option>
+					<option value="0">0分评价</option>
+					<option value="-1">-1分评价</option>
+					<option value="-2">-2分评价</option>
+					<option value="-3">-3分评价</option>
+					<option value="-4">-4分评价</option>
+					<option value="-5">-5分评价</option>
+				</select>
+			</th>
+			<th width="100">
+				<select class="sele" name="" id="submitDate">
+					<option selected="" value="0">全部时间</option>
+					<option value="1">最近三个月</option>
+					<option value="2">今年内</option>
+					<option value="9">2013年</option>
+					<option value="8">2012年</option>
+					<option value="3">2011年</option>
+					<option value="4">2010年</option>
+					<option value="5">2009年</option>
+					<option value="6">2008年</option>
+					<option value="7">2008年以前</option>
+				</select>
+			</th>
+		
+		<th width="128">操作</th>
+		</tr>
 			    		<tr class="tr-td">
 			    			<td>
-			    				图片
 			    				<div class="img-list">
 			    					<a class="img-box"  target="_blank" >
-			    						<img>
+			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
 			    					</a>
 			    				</div>
 			    			</td>
 			    			<td>
-			    				介绍
-			    				<div class="message"></div>
+			    				<div class="message">这是一款透气性很好的鞋子</div>
 			    			</td>
 			    			<td>
-			    				综合评分
-			    				<div class="message"></div>
+			    				<div class="message">5.0</div>
 			    			</td>
 			    			<td>
-			    				浏览时间
 			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
 			    			</td>
 			    			<td class="order-doi">
-			    				浏览操作
+			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
+			    			</td>
+			    		</tr>
+			    		<tr class="tr-td">
+			    			<td>
+			    				<div class="img-list">
+			    					<a class="img-box"  target="_blank" >
+			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
+			    					</a>
+			    				</div>
+			    			</td>
+			    			<td>
+			    				<div class="message">这是一款透气性很好的鞋子</div>
+			    			</td>
+			    			<td>
+			    				<div class="message">5.0</div>
+			    			</td>
+			    			<td>
+			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
+			    			</td>
+			    			<td class="order-doi">
+			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
+			    			</td>
+			    		</tr>
+			    		<tr class="tr-td">
+			    			<td>
+			    				<div class="img-list">
+			    					<a class="img-box"  target="_blank" >
+			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
+			    					</a>
+			    				</div>
+			    			</td>
+			    			<td>
+			    				<div class="message">这是一款透气性很好的鞋子</div>
+			    			</td>
+			    			<td>
+			    				<div class="message">5.0</div>
+			    			</td>
+			    			<td>
+			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
+			    			</td>
+			    			<td class="order-doi">
+			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
 			    			</td>
 			    		</tr>
 			    	</table>
@@ -215,5 +301,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	</div>
 	    </div>
     </div>
+   
   </body>
 </html>
