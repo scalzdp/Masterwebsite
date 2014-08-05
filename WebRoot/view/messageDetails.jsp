@@ -134,32 +134,43 @@ font-size: 12px;
 html {
 color: #000;
 }
+
+
 </style>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/jquery-1.32.js"></script>
 		<script src="js/jquery.cookie.js" type="text/javascript" ></script>
   </head>
-  
+  <style>
+  .main{
+		width:1000px;
+       	hight:95%;
+       	margin:0 auto;
+}
+.pic_display{
+	width:300px;
+	hight:300px;
+}
+#body-context{
+		width:1000px;
+       	hight:95%;
+       	margin:0 auto;
+}
+  </style>
   <body>
-	<script>
-	function showDaTu(src){
-	document.getElementById("defaultImg").src=src;
-	}
-	</script>
-	<img src="wall1.jpg" id="defaultImg">
-	<br><br><br>
-	<img src='Img/wall_s1.jpg' onmouseover="showDaTu('Img/returnback.jpg')">
-	<img src='Img/wall_s2.jpg' onmouseover="showDaTu('Img/wall2.jpg')">
-	<img src='Img/wall_s3.jpg' onmouseover="showDaTu('Img/wall3.jpg')">
-	<img src='Img/wall_s4.jpg' onmouseover="showDaTu('Img/wall4.jpg')">
-	<br>因图片较大，请等待图片加载完成……然后鼠标放小图上就会切换了。
-	
-	<div class="photo">
-	<a href="#"><span></span><img src="wall_s3.jpg" alt="image" width="50" height="50" /></a>圆角头像
-	</div>
-	
-	javascript经典效果示例\JavaScript图片特效
-	<div id="other"><h2>给文章打个分先...</h2>
+  <table class="main">
+  	<tr>
+  		<td>
+  		<div class="message_display">
+				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
+				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
+				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
+			</div>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+  						<div id="other"><h2>给信息打个分先...</h2>
 					<div id="Mark">								
 						<div class="ratingblock">
 							<div id="">
@@ -183,7 +194,36 @@ color: #000;
 						<div id="RateMsg"></div>
 					</div>
 				</div>
-		<script type="text/javascript">
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>
+  			展示评价内容。
+  		</td>
+  	</tr>
+	<tr>
+		<td>
+			<div>
+				<form action="" method="post">
+					<table>
+						<tr>
+							<td>
+								<textarea name="description" rows="10" cols="40" placeholder="值得一评"  ></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="submit" value="提交评价">　
+							</td>
+						</tr>
+					</table>
+				</form> 
+			</div>
+		</td>
+	</tr>
+	
+	</table>
+			<script type="text/javascript">
 		<!--
 		var url=''; //WEB路径
 		var artid =""; //传递参数
@@ -235,6 +275,5 @@ color: #000;
 		 }
 		 //-->
 	</script>
-				</script>
   </body>
 </html>
