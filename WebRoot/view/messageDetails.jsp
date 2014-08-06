@@ -3,6 +3,9 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ page import="com.bip.vo.RealActionVO" %>
+<%@ page import="com.bip.vo.PictureVO" %>
+<%@ page import="com.bip.source.ResourceMessage" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -162,9 +165,10 @@ color: #000;
   	<tr>
   		<td>
   		<div class="message_display">
-				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
-				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
-				<img class="pic_display" src="Img/back-ground-world-cup.jpg">
+  		<%RealActionVO realActionVO = (RealActionVO)request.getAttribute(ResourceMessage.PIC_DETAIL_MESSAGE); %>
+  		<%for(PictureVO pic :realActionVO.getPicturevos()) {%>
+				<img class="pic_display" src="/Img<%=pic.getPicMaxPath() %>">
+		<%} %>
 			</div>
   		</td>
   	</tr>
@@ -223,7 +227,7 @@ color: #000;
 	</tr>
 	
 	</table>
-			<script type="text/javascript">
+	  <script type="text/javascript">
 		<!--
 		var url=''; //WEB路径
 		var artid =""; //传递参数

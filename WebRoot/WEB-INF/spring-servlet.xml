@@ -72,6 +72,10 @@
 				<value>com.bip.bean.Picture</value>
 				<value>com.bip.bean.CacheKey</value>
 				<value>com.bip.bean.Customer</value>
+				<value>com.bip.bean.Evaluation</value>
+				<value>com.bip.bean.ComprehensiveEvaluation</value>
+				<value>com.bip.bean.UserGrowthRecord</value>
+				<value>com.bip.bean.UserRating</value>
 			</list>
 		</property>
 		

@@ -17,21 +17,11 @@ public class RealActionService {
 	
 	public List<RealActionVO> getActionVO(int page,int rows,String city,int currentMaxID,int slidingDirection){
 		List<RealActionVO> vos = new ArrayList<RealActionVO>();
-//		for(int i=0;i<5;i++){
-//			RealActionVO vo = new RealActionVO();
-//			vo.setActiontypename("�ܲ�");
-//			vo.setDateTime("2014-06-20");
-//			vo.setDescription("just like playing basketbool");
-//			vo.setLatitude(30.684939);
-//			vo.setLongitude(104.046489);
-//			vo.setLocation("�ɶ��У��ɻ����Ĵ�ʡ����ҽԺ");
-//			vo.setRealactivityID(i);
-//			vo.setTelephone("15828316576");
-//			vos.add(vo);
-//		}
-		
-		//vos = cached.searchFromCached(page, rows, city, currentMaxID,slidingDirection);
 		vos = cached.searchFromCached(city, currentMaxID, slidingDirection, 1);
 		return vos;
+	}
+	
+	public RealActionVO getActionVOByID(int id){
+		return cached.searchFromCachedByRealActionID(id);
 	}
 }

@@ -13,4 +13,6 @@ public interface ICatch {
 	public int getRealActivityMaxID();
 	
 	public String getRealActivityMaxKey();
+	
+	public RealActionVO searchFromCachedByRealActionID(int id);
 }

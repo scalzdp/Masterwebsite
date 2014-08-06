@@ -225,4 +225,49 @@ public class CachedTool implements ICatch {
 	private String getLocationKey(int id){
 		return "location_"+id;
 	}
+
+	public RealActionVO searchFromCachedByRealActionID(int id) {
+		List<CacheKey> searchKeys =getCacheKeyByRealActionID(id);
+		RealActionVO vo = new RealActionVO();
+		if(searchKeys.size()>0){
+			Object obj = memcached.get(getRealActivityKey(searchKeys.get(0)));
+			if(obj!=null){
+				vo =JsonStrHandler.convertJSONTOObject((String)obj);
+			}else{
+				RealActivity ra = baseDAO.get(new RealActivity(), searchKeys.get(0).getF1());
+				List<PictureVO> picturevos = new ArrayList<PictureVO>();
+				for(Picture p:baseDAO.queryFactory(new Picture(), "t_picture", " and isMain=1 and realActivityId="+ra.getId())){
+					PictureVO picturevo = new PictureVO();
+					picturevo.setId(p.getId());
+					picturevo.setIsMain(p.getIsMain());
+					picturevo.setPicMaxPath(p.getPicMaxPath());
+					picturevo.setRealActivityId(p.getRealActivityId());
+					picturevos.add(picturevo);
+				}
+				Location location = baseDAO.get(new Location(), ra.getLocationId());
+				ActionType actiontype = baseDAO.get(new ActionType(), ra.getActiontypeid());
+				vo.setActiontypename(actiontype.getName());
+				vo.setDateTime(ra.getDateTime().toString());
+				vo.setDescription(ra.getDiscription());
+				vo.setLatitude(location.getLatitude());
+				vo.setLongitude(location.getLongitude());
+				vo.setRealactivityID(ra.getId());
+				vo.setTelephone(ra.getTelephone());
+				vo.setPicturevos(picturevos);
+				memcached.add(getRealActivityKey(searchKeys.get(0)), JsonStrHandler.convertObjectToJson(vo));
+			}
+		}
+		return vo;
+	}
+	
+	private List<CacheKey> getCacheKeyByRealActionID(int id){
+		List<CacheKey> CacheKeyVOs = getCachedKeys();
+		List<CacheKey> searchKeys = new ArrayList<CacheKey>();
+		for(CacheKey ck:CacheKeyVOs){
+			if(ck.getF1().equals(id)){
+				searchKeys.add(ck);
+			}
+		}
+		return searchKeys;
+	}
 }
