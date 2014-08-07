@@ -76,6 +76,7 @@
 				<value>com.bip.bean.ComprehensiveEvaluation</value>
 				<value>com.bip.bean.UserGrowthRecord</value>
 				<value>com.bip.bean.UserRating</value>
+				<value>com.bip.bean.CommentsCacheKey</value>
 			</list>
 		</property>
 		

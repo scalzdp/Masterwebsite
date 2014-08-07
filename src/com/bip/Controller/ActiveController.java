@@ -49,6 +49,7 @@ public class ActiveController {
 	private String getMessageDetails(Model model,@PathVariable int id){
 		System.out.println(id);
 		model.addAttribute(ResourceMessage.PIC_DETAIL_MESSAGE, actionService.getActionVOByID(id));
+		
 		return "messageDetails";
 	}
 	

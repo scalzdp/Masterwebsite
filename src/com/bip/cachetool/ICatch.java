@@ -2,6 +2,7 @@ package com.bip.cachetool;
 
 import java.util.List;
 
+import com.bip.vo.EvaluationVO;
 import com.bip.vo.RealActionVO;
 
 public interface ICatch {
@@ -15,4 +16,6 @@ public interface ICatch {
 	public String getRealActivityMaxKey();
 	
 	public RealActionVO searchFromCachedByRealActionID(int id);
+	
+	public List<EvaluationVO> getEvaluationFromCache(int id);
 }

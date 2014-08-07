@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bip.cachetool.ICatch;
+import com.bip.vo.EvaluationVO;
 import com.bip.vo.RealActionVO;
 
 @Service
@@ -23,5 +24,9 @@ public class RealActionService {
 	
 	public RealActionVO getActionVOByID(int id){
 		return cached.searchFromCachedByRealActionID(id);
+	}
+	
+	public List<EvaluationVO> getEvaluation(int id){
+		return cached.getEvaluationFromCache(id);
 	}
 }

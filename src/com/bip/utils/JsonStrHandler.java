@@ -1,12 +1,17 @@
 package com.bip.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.bip.bean.CacheKey;
+import com.bip.bean.CommentsCacheKey;
 import com.bip.bean.Location;
+import com.bip.vo.EvaluationVO;
 import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
 
@@ -124,5 +129,47 @@ public class JsonStrHandler {
 			cacheKeys.add(ckey);
 		}
 		return cacheKeys;
+	}
+	
+	public static List<CommentsCacheKey> convertJsonToCommentsCacheKeyObjects(String jsonString){
+		List<CommentsCacheKey> cacheKeys = new ArrayList<CommentsCacheKey>();
+		JSONArray jsonArray = JSONArray.fromObject(jsonString);
+		for(int i=0;i<jsonArray.size();i++){
+			CommentsCacheKey ckey = new CommentsCacheKey();
+			JSONObject jsonObjs = JSONObject.fromObject(jsonArray.get(i));
+			ckey.setId(jsonObjs.getInt("id"));
+			ckey.setDataMark(jsonObjs.getInt("dataMark"));
+			ckey.setF1(jsonObjs.getInt("f1"));
+			ckey.setProperty1(jsonObjs.getString("property1"));
+			ckey.setProperty2(jsonObjs.getString("property2"));
+			ckey.setProperty3(jsonObjs.getString("property3"));
+			ckey.setProperty4(jsonObjs.getString("property4"));
+			ckey.setTypeID(jsonObjs.getInt("typeID"));
+			cacheKeys.add(ckey);
+		}
+		return cacheKeys;
+	}
+	
+	public static EvaluationVO convertJSONTOEvaluationVOObject(String jsonString){
+		EvaluationVO vo = new EvaluationVO();
+		JSONArray jsonArray = JSONArray.fromObject(jsonString);
+		JSONObject jsonObj = JSONObject.fromObject(jsonArray.get(0));
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟  
+		vo.setId(jsonObj.getInt("id"));
+		vo.setActivityTypeId(jsonObj.getInt("realActivityId"));
+		vo.setClient(jsonObj.getString("client"));
+		vo.setMemo(jsonObj.getString("Memo"));
+		vo.setScore(jsonObj.getDouble("score"));
+		try {
+			vo.setScoreTime(sdf.parse(jsonObj.getString("scoreTime")));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		try{
+			vo.setUserId(jsonObj.getInt("userId"));
+		}catch(Exception e){
+			vo.setUserId(0);
+		}
+		return vo;
 	}
 }

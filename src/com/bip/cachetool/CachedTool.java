@@ -9,11 +9,14 @@ import org.springframework.stereotype.Service;
 import com.bip.DAO.IBaseDAO;
 import com.bip.bean.ActionType;
 import com.bip.bean.CacheKey;
+import com.bip.bean.CommentsCacheKey;
+import com.bip.bean.Evaluation;
 import com.bip.bean.Location;
 import com.bip.bean.Picture;
 import com.bip.bean.RealActivity;
 import com.bip.source.ResourceMessage;
 import com.bip.utils.JsonStrHandler;
+import com.bip.vo.EvaluationVO;
 import com.bip.vo.PictureVO;
 import com.bip.vo.RealActionVO;
 
@@ -269,5 +272,80 @@ public class CachedTool implements ICatch {
 			}
 		}
 		return searchKeys;
+	}
+
+	/**get the evaluation from the cache
+	 * 1.throw search from memcacheCache get all the comments cache keys
+	 * 2.loop the comments cache keys 
+	 * 3.if can get the Memo from the cache,then and the message to return Object
+	 * 4.if can't get the memo from the cache,then get the message from the database then add the message to memcache. 
+	 * */
+	public List<EvaluationVO> getEvaluationFromCache(int id) {
+		List<EvaluationVO> vos = new ArrayList<EvaluationVO>();
+		List<CommentsCacheKey> cacheKeys = getCommentsCacheKey(id);
+		for(CommentsCacheKey ck:cacheKeys){
+			Object obj = memcached.get(getCommentsCacheKeyName(ck.getF1()));
+			if(obj!=null){
+				vos.add(JsonStrHandler.convertJSONTOEvaluationVOObject((String)obj));
+			}else{
+				//TODO:从数据库里面取出评价，然后将评价写入到缓存中
+				EvaluationVO vo = new EvaluationVO();
+				Evaluation eval = baseDAO.get(new Evaluation(), ck.getF1());
+				vo.setActivityTypeId(eval.getActivityTypeId());
+				vo.setClient(eval.getClient());
+				vo.setId(eval.getId());
+				vo.setMemo(eval.getMemo());
+				vo.setRealActivityId(eval.getRealActivityId());
+				vo.setScore(eval.getScore());
+				vo.setScoreTime(eval.getScoreTime());
+				vo.setUserId(eval.getUserId());
+				vos.add(vo);
+			}
+		}
+		return vos;
+	}
+	
+	/**Organization the commentsCacheKey
+	 * 1.incoming the evaluation id
+	 * 2.return message like 'evaluation_1'
+	 * */
+	private String getCommentsCacheKeyName(int id){
+		return "evaluation_"+id;
+	}
+	
+	/**store all the cache keys,key name
+	 * */
+	private String getEvaluationCackeKey(){
+		return "evaluation_cachedkeys";
+	}
+	
+	/**get meet the conditions comments cache keys
+	 * 1.get all comments cache keys 
+	 * 2.get meet the conditions throw commentsCacheKey F1 equal id
+	 * */
+	private List<CommentsCacheKey> getCommentsCacheKey(int id){
+		List<CommentsCacheKey> cacheKeys =getAllCommentsCacheKey();
+		List<CommentsCacheKey> ck = new ArrayList<CommentsCacheKey>();
+		for(CommentsCacheKey c : cacheKeys){
+			if(c.getF1().equals(id)){
+				ck.add(c);
+			}
+		}
+		return ck;
+	}
+	
+	/**get all the comments cache keys
+	 * 1.get the all cache keys from memcache,then convert the json String to Object
+	 * 2.if get cache not has the message ,then get cache key from database then add the message to memcache
+	 * */
+	private List<CommentsCacheKey> getAllCommentsCacheKey(){
+		List<CommentsCacheKey> vos;
+		if(memcached.get(getCachedKeyKeys())!=null){
+			vos = JsonStrHandler.convertJsonToCommentsCacheKeyObjects((String)memcached.get(getEvaluationCackeKey()));
+		}else{
+			vos = baseDAO.getAllSelf(new CommentsCacheKey(), "t_commentscachedkey");
+			memcached.replace(getEvaluationCackeKey(), JsonStrHandler.convertObjectToJson(vos));
+		}
+		return vos;
 	}
 }

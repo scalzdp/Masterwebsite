@@ -6,4 +6,6 @@ public class ResourceMessage {
 	public static String CUSTOMERSESSION = "customerSession";
 	
 	public static String PIC_DETAIL_MESSAGE="pic_detail_message";
+	
+	public static String COMMENTS="comments";
 }
