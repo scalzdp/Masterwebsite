@@ -1,6 +1,5 @@
 package com.bip.bean;
 
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,15 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="t_evaluation")
-public class Evaluation {
+@Table(name="t_ratingscore")
+public class RatingScore {
 	private Integer id;
 	private Integer realActivityId;
 	private Integer userId;
 	private Integer activityTypeId;
-	private String Memo;
+	private Double score;
+	private Date scoreTime;
 	private String client;
-	private Date time;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -54,15 +53,21 @@ public class Evaluation {
 		this.activityTypeId = activityTypeId;
 	}
 	
+	@Column
+	public Double getScore() {
+		return score;
+	}
+	public void setScore(Double score) {
+		this.score = score;
+	}
 	
 	@Column
-	public String getMemo() {
-		return Memo;
+	public Date getScoreTime() {
+		return scoreTime;
 	}
-	public void setMemo(String memo) {
-		Memo = memo;
+	public void setScoreTime(Date scoreTime) {
+		this.scoreTime = scoreTime;
 	}
-	
 	
 	@Column
 	public String getClient() {
@@ -70,13 +75,5 @@ public class Evaluation {
 	}
 	public void setClient(String client) {
 		this.client = client;
-	}
-	
-	@Column
-	public Date getTime() {
-		return time;
-	}
-	public void setTime(Date time) {
-		this.time = time;
 	}
 }

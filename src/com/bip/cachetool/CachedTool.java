@@ -296,8 +296,6 @@ public class CachedTool implements ICatch {
 				vo.setId(eval.getId());
 				vo.setMemo(eval.getMemo());
 				vo.setRealActivityId(eval.getRealActivityId());
-				vo.setScore(eval.getScore());
-				vo.setScoreTime(eval.getScoreTime());
 				vo.setUserId(eval.getUserId());
 				vos.add(vo);
 			}

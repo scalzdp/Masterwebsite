@@ -208,25 +208,41 @@ color: #000;
 	<tr>
 		<td>
 			<div>
-				<form action="" method="post">
-					<table>
-						<tr>
-							<td>
-								<textarea name="description" rows="10" cols="40" placeholder="值得一评"  ></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="submit" value="提交评价">　
-							</td>
-						</tr>
-					</table>
-				</form> 
+				<table>
+					<tr>
+						<td>
+							<textarea id="description" name="description" rows="10" cols="40" placeholder="值得一评"  ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="button" id="submitComments" onclick="submitcomments();" value="提交评价">　
+						</td>
+					</tr>
+				</table>
 			</div>
 		</td>
 	</tr>
 	
 	</table>
+	<script type="text/javascript">
+		function submitcomments(){
+			var decs = $("#description").val();
+			$.ajax({
+				url:"postComment",
+				data:{comment:decs},
+				type:"POST",
+				cache:false,
+				dataType:"json",
+				success:function(data){
+				
+				},
+				error:function(data){
+					alert('评论提交异常！');
+				}
+			});
+		}
+	</script>
 	  <script type="text/javascript">
 		<!--
 		var url=''; //WEB路径
