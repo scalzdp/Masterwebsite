@@ -284,13 +284,13 @@ public class CachedTool implements ICatch {
 		List<EvaluationVO> vos = new ArrayList<EvaluationVO>();
 		List<CommentsCacheKey> cacheKeys = getCommentsCacheKey(id);
 		for(CommentsCacheKey ck:cacheKeys){
-			Object obj = memcached.get(getCommentsCacheKeyName(ck.getF1()));
+			Object obj = memcached.get(getCommentsCacheKeyName(ck.getTypeID()));
 			if(obj!=null){
 				vos.add(JsonStrHandler.convertJSONTOEvaluationVOObject((String)obj));
 			}else{
 				//TODO:从数据库里面取出评价，然后将评价写入到缓存中
 				EvaluationVO vo = new EvaluationVO();
-				Evaluation eval = baseDAO.get(new Evaluation(), ck.getF1());
+				Evaluation eval = baseDAO.get(new Evaluation(), ck.getTypeID());
 				vo.setActivityTypeId(eval.getActivityTypeId());
 				vo.setClient(eval.getClient());
 				vo.setId(eval.getId());
@@ -345,5 +345,10 @@ public class CachedTool implements ICatch {
 			memcached.replace(getEvaluationCackeKey(), JsonStrHandler.convertObjectToJson(vos));
 		}
 		return vos;
+	}
+	public void saveCommentsToCached(Evaluation eva){
+		String key = getCommentsCacheKeyName(eva.getId());
+		String value = JsonStrHandler.convertObjectToJson(eva);
+		memcached.add(key, value);
 	}
 }

@@ -159,9 +159,8 @@ public class JsonStrHandler {
 		vo.setActivityTypeId(jsonObj.getInt("realActivityId"));
 		vo.setClient(jsonObj.getString("client"));
 		vo.setMemo(jsonObj.getString("Memo"));
-		vo.setScore(jsonObj.getDouble("score"));
 		try {
-			vo.setScoreTime(sdf.parse(jsonObj.getString("scoreTime")));
+			vo.setTime(sdf.parse(jsonObj.getString("time")));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

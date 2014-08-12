@@ -5,6 +5,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ page import="com.bip.vo.RealActionVO" %>
 <%@ page import="com.bip.vo.PictureVO" %>
+<%@ page import="com.bip.vo.EvaluationVO" %>
 <%@ page import="com.bip.source.ResourceMessage" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -161,6 +162,7 @@ color: #000;
 }
   </style>
   <body>
+  <input type="hidden" id="realactivity_id" value="<%=request.getAttribute(ResourceMessage.REAL_ACTIVITY_ID)%>">
   <table class="main">
   	<tr>
   		<td>
@@ -201,8 +203,13 @@ color: #000;
   		</td>
   	</tr>
   	<tr>
-  		<td>
-  			展示评价内容。
+  		<td >
+  			<div id="display_evaluation">
+  			<%List<EvaluationVO> vos = (List<EvaluationVO>)request.getAttribute(ResourceMessage.DISPLAY_EVALATION_COMMENT) ;%>
+  			<%for(EvaluationVO vo:vos) {%>
+  				<p><%=vo.getMemo() %></p>
+  			<%} %>
+  			</div>
   		</td>
   	</tr>
 	<tr>
@@ -228,19 +235,29 @@ color: #000;
 	<script type="text/javascript">
 		function submitcomments(){
 			var decs = $("#description").val();
+			var realActivityID = $("#realactivity_id").val();
 			$.ajax({
 				url:"postComment",
-				data:{comment:decs},
+				data:{comment:decs,RealActiveID:realActivityID},
 				type:"POST",
 				cache:false,
 				dataType:"json",
 				success:function(data){
-				
+					display_evaluation(decs);
 				},
 				error:function(data){
-					alert('评论提交异常！');
+					display_evaluation(decs);
 				}
 			});
+		}
+		
+		function display_evaluation(decs){
+		    var tmp = $('#display_evaluation > p:last-child');
+		    if(tmp.length==0){
+		    	$('#display_evaluation').append('<p>'+decs+'</p>'); 
+		    }else{
+				$('#display_evaluation > p:last-child').after('<p>'+decs+'</p>');
+			}
 		}
 	</script>
 	  <script type="text/javascript">
