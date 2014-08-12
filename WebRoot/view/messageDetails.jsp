@@ -234,7 +234,9 @@ color: #000;
 	</table>
 	<script type="text/javascript">
 		function submitcomments(){
-			var decs = $("#description").val();
+		
+			var obj = $("#description");
+			var decs = obj.val();
 			var realActivityID = $("#realactivity_id").val();
 			$.ajax({
 				url:"postComment",
@@ -249,6 +251,7 @@ color: #000;
 					display_evaluation(decs);
 				}
 			});
+			clearFiled(obj);
 		}
 		
 		function display_evaluation(decs){
@@ -258,6 +261,14 @@ color: #000;
 		    }else{
 				$('#display_evaluation > p:last-child').after('<p>'+decs+'</p>');
 			}
+		}
+		
+		function check_input(eve){
+			
+		}
+		
+		function clearFiled(eve){
+			eve.attr("value","");
 		}
 	</script>
 	  <script type="text/javascript">

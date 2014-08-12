@@ -158,11 +158,10 @@ public class JsonStrHandler {
 		vo.setId(jsonObj.getInt("id"));
 		vo.setActivityTypeId(jsonObj.getInt("realActivityId"));
 		vo.setClient(jsonObj.getString("client"));
-		vo.setMemo(jsonObj.getString("Memo"));
+		vo.setMemo(jsonObj.getString("memo"));
 		try {
 			vo.setTime(sdf.parse(jsonObj.getString("time")));
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		try{
 			vo.setUserId(jsonObj.getInt("userId"));
