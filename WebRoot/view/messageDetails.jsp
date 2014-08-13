@@ -215,18 +215,20 @@ color: #000;
 	<tr>
 		<td>
 			<div>
-				<table>
-					<tr>
-						<td>
-							<textarea id="description" name="description" rows="10" cols="40" placeholder="值得一评"  ></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="button" id="submitComments" onclick="submitcomments();" value="提交评价">　
-						</td>
-					</tr>
-				</table>
+				<form>
+					<table>
+						<tr>
+							<td>
+								<textarea id="description" name="description" rows="10" cols="40" placeholder="值得一评"  title="评价内容" ></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="submitComments" onclick="submitcomments();" value="提交评价">　
+							</td>
+						</tr>
+					</table>
+				</form>
 			</div>
 		</td>
 	</tr>
@@ -237,21 +239,23 @@ color: #000;
 		
 			var obj = $("#description");
 			var decs = obj.val();
-			var realActivityID = $("#realactivity_id").val();
-			$.ajax({
-				url:"postComment",
-				data:{comment:decs,RealActiveID:realActivityID},
-				type:"POST",
-				cache:false,
-				dataType:"json",
-				success:function(data){
-					display_evaluation(decs);
-				},
-				error:function(data){
-					display_evaluation(decs);
-				}
-			});
-			clearFiled(obj);
+			if(form_validate()){
+				var realActivityID = $("#realactivity_id").val();
+				$.ajax({
+					url:"postComment",
+					data:{comment:decs,RealActiveID:realActivityID},
+					type:"POST",
+					cache:false,
+					dataType:"json",
+					success:function(data){
+						display_evaluation(decs);
+					},
+					error:function(data){
+						display_evaluation(decs);
+					}
+				});
+				clearFiled(obj);
+			}
 		}
 		
 		function display_evaluation(decs){
@@ -264,11 +268,81 @@ color: #000;
 		}
 		
 		function check_input(eve){
-			
+			//input message not promiss null
+			//input message length limit
+			//limit input message
 		}
 		
 		function clearFiled(eve){
 			eve.attr("value","");
+		}
+	</script>
+	<script>
+		//验证输入的str字符串中是否包含指定的字符。如果包含返回true，否则返回false;
+		var charset ="%\(\)><";
+		function contain(str,charset){
+			var i;
+			for(i=0;i<charset.length;i++){
+				if(str.indexOf(charset.charAt(i))>=0){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		//输入的的信息是不是超过了指定的的长度。如果超过指定长度返回true，否则返回false；
+		function inputMessageToLong(str,length){
+			if(str.length>length){
+				return true;
+			}
+			return false;
+		}
+		
+		//判断用户的输入是否不为空，如果为空返回false，否则返回true。
+		function inputMessageIsNotNull(str){
+			if(str.trim().length==0){
+				return false;
+			}
+			return true;
+		}
+		
+		//form 文本域的通用校验函数,通用验证INPUT的Type=“text”不能为空和TEXTAREA输入不能为空和所有的验证不能有非法输入。
+		function form_validate(){
+			fm=document.forms[0];//只检测一个form,如果是多个可以改变判断条件
+			var i;
+			for(i=0;i<fm.length;i++){
+			  if(fm[i].tagName.toUpperCase()=="INPUT" &&fm[i].type.toUpperCase()=="TEXT" && (fm[i].title!="")) {
+			  	  if(!inputMessageIsNotNull(fm[i].value))
+			        { 
+			        	str_warn1=fm[i].title+"不能为空!"; 
+			        	alert(str_warn1); 
+			        	fm[i].focus(); 
+			        	return false;         
+			        }
+			  	}
+			  	if(fm[i].tagName.toUpperCase()=="TEXTAREA" && (fm[i].title!="")) {
+			  	  if(!inputMessageIsNotNull(fm[i].value))
+			        { 
+			        	str_warn1 +=fm[i].title+"不能为空!"; 
+			        	alert(str_warn1); 
+			        	fm[i].focus(); 
+			        	return false;         
+			        }else{
+			        	if(inputMessageToLong(fm[i].value,200)){
+				        	str_warn1 +=fm[i].title+"数值大于能够输入的数值了!"; 
+				        	alert(str_warn1); 
+				        	fm[i].focus(); 
+				        	return false;
+			        	}
+			        }
+			  	}
+			  	if(contain(fm[i].value,charset)){
+			  		str_warn1=fm[i].title+"包含了非法字符!"
+			  		alert(str_warn1);
+			  		fm[i].focus();
+			  		return false;
+			  	}
+			  }
 		}
 	</script>
 	  <script type="text/javascript">
