@@ -284,7 +284,7 @@ public class CachedTool implements ICatch {
 		List<EvaluationVO> vos = new ArrayList<EvaluationVO>();
 		List<CommentsCacheKey> cacheKeys = getCommentsCacheKey(id);
 		for(CommentsCacheKey ck:cacheKeys){
-			Object obj = memcached.get(getCommentsCacheKeyName(ck.getTypeID()));
+			Object obj = memcached.get(getCommentsCacheKeyName(ck.getF1()));
 			if(obj!=null){
 				vos.add(JsonStrHandler.convertJSONTOEvaluationVOObject((String)obj));
 			}else{
