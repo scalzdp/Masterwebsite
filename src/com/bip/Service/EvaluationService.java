@@ -45,16 +45,23 @@ public class EvaluationService {
 	
 	/**save the rating score message,if save the right then return true;
 	 * */
-	public boolean saveRatingScore(RatingScoreVO vo){
+	public RatingScoreVO saveRatingScore(RatingScoreVO vo){
 		RatingScore ras= new RatingScore();
+		List<RatingScore> rases = baseDAO.queryFactory(new RatingScore(), "t_ratingscore", " and realActivityId="+vo.getRealActivityId());
 		ras.setActivityTypeId(vo.getActivityTypeId());
 		ras.setClient(vo.getClient());
 		ras.setRealActivityId(vo.getRealActivityId());
 		ras.setUserId(vo.getUserId());
 		ras.setScore(vo.getScore());
 		ras.setScoreTime(new Date());
+		if(rases.size()>0){
+		
+			ras.setScoreNum(rases.get(0).getScoreNum()+1);
+			baseDAO.update(ras);
+		}
+		ras.setScoreNum(1);
 		baseDAO.save(ras);
-		return true;
+		return convertRatingScoreToRatingScoreVO(ras);
 	}
 	
 	public RealActionVO getRealActionVOByRealActionID(int RealActiveID){
@@ -63,6 +70,30 @@ public class EvaluationService {
 	
 	public List<EvaluationVO> getEvaluationFromCache(int id){
 		return cache.getEvaluationFromCache(id);
+	}
+	
+	public RatingScoreVO getScore(int id){
+		List<RatingScore> rases = baseDAO.queryFactory(new RatingScore(), "t_ratingscore", " and realActivityId="+id);
+		if(rases.size()>0){
+			return convertRatingScoreToRatingScoreVO(rases.get(0));
+		}else{
+			RatingScoreVO vo = new RatingScoreVO();
+			vo.setRealActivityId(id);
+			vo.setScore(0.0);
+			vo.setScoreNum(0);
+			return vo;
+		}
+	}
+	
+	private RatingScoreVO convertRatingScoreToRatingScoreVO(RatingScore ras){
+		RatingScoreVO rsvo = new RatingScoreVO();
+		rsvo.setActivityTypeId(ras.getActivityTypeId());
+		rsvo.setClient(ras.getClient());
+		rsvo.setId(ras.getId());
+		rsvo.setRealActivityId(ras.getRealActivityId());
+		rsvo.setScore(ras.getScore());
+		rsvo.setScoreNum(ras.getScoreNum());
+		return rsvo;
 	}
 
 }

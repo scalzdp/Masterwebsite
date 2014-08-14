@@ -198,6 +198,7 @@ color: #000;
 							</div>
 						</div> 
 						<div id="RateMsg"></div>
+						"平均分:<span id="Rate"></span>(总评分次数为：<span id="RateCount"></span> 次)"
 					</div>
 				</div>
   		</td>
@@ -348,21 +349,25 @@ color: #000;
 	  <script type="text/javascript">
 		<!--
 		var url=''; //WEB路径
-		var artid =""; //传递参数
+		var artid =$("#realactivity_id").val(); //传递参数
 		//alert(artid);
 
 		$(document).ready(function(){
 			$('#news').addClass('current');
-			$.getJSON(url+"ajax.php?do=init&artid="+artid+"&r="+ Math.random(),
+			$.getJSON(url+"./scoring/"+artid,
 				function(data){
 				  $.each(data, function(i,k){
 					$("#"+i).html(k);
-					if(i == 'Rate'){
+					if(i==0){//第0个元素表示综合评分
 						width = 30+Math.abs(k)*30;
 						left = k>0 ? 150 : 180-width;
 						if(k<0) $('.current-rating').css("background-position",'right bottom');
 						$('.current-rating').width(width);
 						$('.current-rating').css("left",left);
+						setOverallRating(k);
+					}
+					if(i==2){//第二个元素表示打分次数
+						setScoreNum(k);
 					}
 				  });
 				});		 
@@ -376,17 +381,20 @@ color: #000;
 					$("#RateMsg").hide('slow');
 				},2000);
 			}else{				
-				$.getJSON(url+"ajax.php?do=rate&artid="+artid+"&j="+j+ "&r="+Math.random(),
+				$.getJSON(url+"./scoring/"+artid+"/"+j,
 					function(data){
 					  $.each(data, function(i,k){
-						$("#"+i).html(k);
-						if(i == 'Rate'){
-							width = 30+Math.abs(k)*30;
-							left = k>0 ? 150 : 180-width;
-							if(k<0) $('.current-rating').css("background-position",'right bottom');
-							$('.current-rating').width(width);
-							$('.current-rating').css("left",left);
-						}
+							if(i==0){//第0个元素表示综合评分
+								width = 30+Math.abs(k)*30;
+								left = k>0 ? 150 : 180-width;
+								if(k<0) $('.current-rating').css("background-position",'right bottom');
+								$('.current-rating').width(width);
+								$('.current-rating').css("left",left);
+								setOverallRating(k);
+							}
+							if(i==2){//第二个元素表示打分次数
+								setScoreNum(k);
+							}
 					  });				  
 						$('#RateMsg').html('评分成功,谢谢参与!').fadeIn('slow');
 						setTimeout(function(){
@@ -395,7 +403,19 @@ color: #000;
 					});	
 			}
 		 }
+		 function setOverallRating(score){
+		 	$("#Rate").text(score);
+		 }
+		 function setScoreNum(num){
+		 	$("#RateCount").text(num);
+		 }
 		 //-->
+	</script>
+	<input type="button" onclick="dotest();" value="test"/>
+	<script>
+	function dotest(){
+		$.each( [0,1,2], function(i, n){     alert( "Item #" + i + ": " + n );   });
+	} 
 	</script>
   </body>
 </html>

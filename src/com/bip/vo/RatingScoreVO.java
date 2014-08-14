@@ -10,6 +10,7 @@ public class RatingScoreVO {
 	private Double score;
 	private Date scoreTime;
 	private String client;
+	private int scoreNum;
 	public Integer getId() {
 		return id;
 	}
@@ -51,5 +52,11 @@ public class RatingScoreVO {
 	}
 	public void setClient(String client) {
 		this.client = client;
+	}
+	public int getScoreNum() {
+		return scoreNum;
+	}
+	public void setScoreNum(int scoreNum) {
+		this.scoreNum = scoreNum;
 	}
 }

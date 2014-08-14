@@ -14,6 +14,7 @@ public class UserRating {
 	private String level;
 	private Double experience;
 	private Integer dataMark;
+	private Integer socreNum;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -46,5 +47,13 @@ public class UserRating {
 	}
 	public void setDataMark(Integer dataMark) {
 		this.dataMark = dataMark;
+	}
+	
+	@Column
+	public Integer getSocreNum() {
+		return socreNum;
+	}
+	public void setSocreNum(Integer socreNum) {
+		this.socreNum = socreNum;
 	}
 }

@@ -19,6 +19,7 @@ public class RatingScore {
 	private Double score;
 	private Date scoreTime;
 	private String client;
+	private int scoreNum;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -75,5 +76,13 @@ public class RatingScore {
 	}
 	public void setClient(String client) {
 		this.client = client;
+	}
+	
+	@Column
+	public int getScoreNum() {
+		return scoreNum;
+	}
+	public void setScoreNum(int scoreNum) {
+		this.scoreNum = scoreNum;
 	}
 }
