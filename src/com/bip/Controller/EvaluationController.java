@@ -51,12 +51,22 @@ public class EvaluationController {
 		vo.setScore(score);
 		vo = evaluationService.saveRatingScore(vo);
 		request.setAttribute("jsonData", "");
-		return vo.getScore()+","+vo.getScoreNum();
+		if(vo.getScoreNum()!=0){
+			int tmpScore = (int) (vo.getScore()/vo.getScoreNum());
+			return tmpScore+","+vo.getScoreNum();
+		}else{
+			return 0+","+0;
+		}
 	}
 	
 	@RequestMapping(value="scoring/{id}",method=RequestMethod.GET)
 	public @ResponseBody String getScore(Model model,HttpServletRequest request,@PathVariable int id){
 		RatingScoreVO vo = evaluationService.getScore(id);
-		return vo.getScore()+","+vo.getScoreNum();
+		if(vo.getScoreNum()!=0){
+			int tmpScore = (int) (vo.getScore()/vo.getScoreNum());
+			return tmpScore+","+vo.getScoreNum();
+		}else{
+			return 0+","+0;
+		}
 	}
 }
