@@ -356,25 +356,19 @@ color: #000;
 			$('#news').addClass('current');
 			$.getJSON(url+"./scoring/"+artid,
 				function(data){
-				  $.each(data, function(i,k){
-					$("#"+i).html(k);
-					if(i==0){//第0个元素表示综合评分
-						width = 30+Math.abs(k)*30;
-						left = k>0 ? 150 : 180-width;
-						if(k<0) $('.current-rating').css("background-position",'right bottom');
-						$('.current-rating').width(width);
-						$('.current-rating').css("left",left);
-						setOverallRating(k);
-					}
-					if(i==2){//第二个元素表示打分次数
-						setScoreNum(k);
-					}
-				  });
-				});		 
+					var d = data.split(',');
+					width = 30+Math.abs(d[0])*30;
+					left = d[0]>0 ? 150 : 180-width;
+					if(d[0]<0) $('.current-rating').css("background-position",'right bottom');
+					$('.current-rating').width(width);
+					$('.current-rating').css("left",left);
+					setOverallRating(d[0]);
+					setScoreNum(d[1]);
+				  });	 
 		});
 
 		function rate(j){
-			$("#rating_"+artid+">li>a").remove();			
+			$("#rating_"+artid+">li>a").remove();		
 			if($.cookie('rate_aid_'+artid) == 1){
 				$('#RateMsg').html('您已评过分，不能重复评分。谢谢!').fadeIn('slow');
 				setTimeout(function(){
@@ -383,19 +377,14 @@ color: #000;
 			}else{				
 				$.getJSON(url+"./scoring/"+artid+"/"+j,
 					function(data){
-					  $.each(data, function(i,k){
-							if(i==0){//第0个元素表示综合评分
-								width = 30+Math.abs(k)*30;
-								left = k>0 ? 150 : 180-width;
-								if(k<0) $('.current-rating').css("background-position",'right bottom');
-								$('.current-rating').width(width);
-								$('.current-rating').css("left",left);
-								setOverallRating(k);
-							}
-							if(i==2){//第二个元素表示打分次数
-								setScoreNum(k);
-							}
-					  });				  
+						var d = data.split(',');
+						width = 30+Math.abs(d[0])*30;
+						left = d[0]>0 ? 150 : 180-width;
+						if(d[0]<0) $('.current-rating').css("background-position",'right bottom');
+						$('.current-rating').width(width);
+						$('.current-rating').css("left",left);
+						setOverallRating(d[0]);	
+						setScoreNum(d[1]);			  
 						$('#RateMsg').html('评分成功,谢谢参与!').fadeIn('slow');
 						setTimeout(function(){
 							$("#RateMsg").hide('slow');
@@ -410,12 +399,6 @@ color: #000;
 		 	$("#RateCount").text(num);
 		 }
 		 //-->
-	</script>
-	<input type="button" onclick="dotest();" value="test"/>
-	<script>
-	function dotest(){
-		$.each( [0,1,2], function(i, n){     alert( "Item #" + i + ": " + n );   });
-	} 
 	</script>
   </body>
 </html>

@@ -59,9 +59,10 @@ public class EvaluationService {
 			ras.setScoreNum(rases.get(0).getScoreNum()+1);
 			ras.setScore(rases.get(0).getScore()+vo.getScore());
 			baseDAO.update(ras);
+		}else{
+			ras.setScoreNum(1);
+			baseDAO.save(ras);
 		}
-		ras.setScoreNum(1);
-		baseDAO.save(ras);
 		return convertRatingScoreToRatingScoreVO(ras);
 	}
 	
@@ -92,8 +93,7 @@ public class EvaluationService {
 		rsvo.setClient(ras.getClient());
 		rsvo.setId(ras.getId());
 		rsvo.setRealActivityId(ras.getRealActivityId());
-		int tmpScore = (int) (ras.getScore()/ras.getScoreNum());
-		rsvo.setScore((double)tmpScore);
+		rsvo.setScore(ras.getScore());
 		rsvo.setScoreNum(ras.getScoreNum());
 		return rsvo;
 	}
