@@ -249,6 +249,7 @@ color: #000;
 					cache:false,
 					dataType:"json",
 					success:function(data){
+						test(data);
 						display_evaluation(decs);
 					},
 					error:function(data){
@@ -257,6 +258,10 @@ color: #000;
 				});
 				clearFiled(obj);
 			}
+		}
+		
+		function test(data){
+			var t = data;
 		}
 		
 		function display_evaluation(decs){
@@ -311,6 +316,7 @@ color: #000;
 		function form_validate(){
 			fm=document.forms[0];//只检测一个form,如果是多个可以改变判断条件
 			var i;
+			var str_warn1;
 			for(i=0;i<fm.length;i++){
 			  if(fm[i].tagName.toUpperCase()=="INPUT" &&fm[i].type.toUpperCase()=="TEXT" && (fm[i].title!="")) {
 			  	  if(!inputMessageIsNotNull(fm[i].value))
@@ -338,12 +344,13 @@ color: #000;
 			        }
 			  	}
 			  	if(contain(fm[i].value,charset)){
-			  		str_warn1=fm[i].title+"包含了非法字符!"
+			  		str_warn1 +=fm[i].title+"包含了非法字符!"
 			  		alert(str_warn1);
 			  		fm[i].focus();
 			  		return false;
 			  	}
 			  }
+			  return true;
 		}
 	</script>
 	  <script type="text/javascript">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bip.Service.EvaluationService;
 import com.bip.cachetool.ICatch;
 import com.bip.source.ResourceMessage;
+import com.bip.utils.JsonStrHandler;
 import com.bip.vo.EvaluationVO;
 import com.bip.vo.RatingScoreVO;
 import com.bip.vo.RealActionVO;
@@ -41,7 +42,9 @@ public class EvaluationController {
 			vo.setUserId(0);//0 is traveller not a sign up user
 		}
 		evaluationService.saveEvaluationMemo(vo);
-		return "json";
+		String json = JsonStrHandler.convertObjectToJson(vo);
+		//request.setAttribute("jsonData", json);
+		return json;
 	}
 	
 	@RequestMapping(value="scoring/{id}/{score}",method=RequestMethod.GET)
