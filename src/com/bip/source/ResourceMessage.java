@@ -12,4 +12,6 @@ public class ResourceMessage {
 	public static String REAL_ACTIVITY_ID="realactivity_id";
 	
 	public static String DISPLAY_EVALATION_COMMENT ="display_evalation_comment";
+	
+	public static String EVALUATION_HISTORY = "EvaluationOfHistoryVO";
 }

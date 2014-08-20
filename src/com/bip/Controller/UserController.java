@@ -1,5 +1,7 @@
 package com.bip.Controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bip.Service.CustomerService;
 import com.bip.source.ResourceMessage;
+import com.bip.vo.EvaluationOfHistoryVO;
 import com.bip.vo.UserVO;
 
 @Controller
@@ -52,7 +55,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="mystep",method=RequestMethod.GET)
-	private String getMyStep(Model model){
+	private String getMyStep(Model model,HttpSession session){
+		Integer userid=0;
+		try{
+			UserVO vo = (UserVO)session.getAttribute(ResourceMessage.CUSTOMERSESSION);
+			userid = vo.getId();
+			List<EvaluationOfHistoryVO> evos = customerService.getEvaluationHistory(userid);
+			model.addAttribute(ResourceMessage.EVALUATION_HISTORY, evos);
+		}catch(Exception e){
+			
+		}
 		return "person/mystep";
 	}
 }

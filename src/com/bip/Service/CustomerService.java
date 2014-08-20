@@ -1,5 +1,6 @@
 package com.bip.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.bip.DAO.IBaseDAO;
 import com.bip.bean.Customer;
+import com.bip.bean.Evaluation;
+import com.bip.cachetool.ICatch;
+import com.bip.vo.EvaluationOfHistoryVO;
+import com.bip.vo.PictureVO;
+import com.bip.vo.RealActionVO;
 import com.bip.vo.UserVO;
 
 @Service
@@ -14,6 +20,9 @@ public class CustomerService {
 	
 	@Autowired
 	private IBaseDAO baseDAO;
+	
+	@Autowired
+	private ICatch catched;
 	
 	/**get the login user message
 	 * */
@@ -55,5 +64,26 @@ public class CustomerService {
 		}else{
 			return true;
 		}
+	}
+	
+	/**through userId get this user evaluation historys 
+	 * */
+	public List<EvaluationOfHistoryVO> getEvaluationHistory(int userid){
+		List<EvaluationOfHistoryVO> vos = new ArrayList<EvaluationOfHistoryVO>();
+		List<Evaluation> evaluations = baseDAO.queryFactory(new Evaluation(),"t_evaluation", " and userId ="+userid);
+		for(Evaluation e :evaluations){
+			EvaluationOfHistoryVO vo = new EvaluationOfHistoryVO();
+			RealActionVO ravo = catched.searchFromCachedByRealActionID(e.getId());
+			vo.setDateTime(e.getTime());
+			vo.setEvaluationId(e.getId());
+			vo.setMemo(e.getMemo());
+			for(PictureVO pvo : ravo.getPicturevos()){
+				if(pvo.getIsMain().equals(1)){
+					vo.setPath(pvo.getPicMaxPath());
+				}
+			}
+			vo.setRealActivityId(ravo.getRealactivityID());
+		}
+		return vos;
 	}
 }

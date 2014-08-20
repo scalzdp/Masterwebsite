@@ -3,7 +3,8 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%@ page import="com.bip.vo.EvaluationOfHistoryVO" %>
+<%@ page import="com.bip.source.ResourceMessage" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -176,7 +177,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <div class="top">
+  <div class="top">&nbsp; 
   	<a href="javascript:void(0);" onclick="returnback()">
 		<img src="Img/returnback.jpg"/>
 	</a>
@@ -196,106 +197,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </div>
 		    <div class="mc">
 			    <div class="tb-void">
+			    <%List<EvaluationOfHistoryVO> vos = (List<EvaluationOfHistoryVO>)request.getAttribute(ResourceMessage.EVALUATION_HISTORY); %>
 			    	<table  width="100%" border="0" cellspacing="0" cellpadding="0">
-			    	<tr class="tr-th">
-			<th width="286">浏览信息</th>
-			<th width="180">介绍</th>
-			<th width="100">
-				<select class="sele" name="" id="orderState">
-					<option selected="" value="4096">全部分数</option>
-					<option value="5">满分评价</option>
-					<option value="4">4分评价</option>
-					<option value="3">3分评价</option>
-					<option value="2">2分评价</option>
-					<option value="1">1分评价</option>
-					<option value="0">0分评价</option>
-					<option value="-1">-1分评价</option>
-					<option value="-2">-2分评价</option>
-					<option value="-3">-3分评价</option>
-					<option value="-4">-4分评价</option>
-					<option value="-5">-5分评价</option>
-				</select>
-			</th>
-			<th width="100">
-				<select class="sele" name="" id="submitDate">
-					<option selected="" value="0">全部时间</option>
-					<option value="1">最近三个月</option>
-					<option value="2">今年内</option>
-					<option value="9">2013年</option>
-					<option value="8">2012年</option>
-					<option value="3">2011年</option>
-					<option value="4">2010年</option>
-					<option value="5">2009年</option>
-					<option value="6">2008年</option>
-					<option value="7">2008年以前</option>
-				</select>
-			</th>
-		
-		<th width="128">操作</th>
-		</tr>
-			    		<tr class="tr-td">
-			    			<td>
-			    				<div class="img-list">
-			    					<a class="img-box"  target="_blank" >
-			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
-			    					</a>
-			    				</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">这是一款透气性很好的鞋子</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">5.0</div>
-			    			</td>
-			    			<td>
-			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
-			    			</td>
-			    			<td class="order-doi">
-			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
-			    			</td>
-			    		</tr>
-			    		<tr class="tr-td">
-			    			<td>
-			    				<div class="img-list">
-			    					<a class="img-box"  target="_blank" >
-			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
-			    					</a>
-			    				</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">这是一款透气性很好的鞋子</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">5.0</div>
-			    			</td>
-			    			<td>
-			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
-			    			</td>
-			    			<td class="order-doi">
-			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
-			    			</td>
-			    		</tr>
-			    		<tr class="tr-td">
-			    			<td>
-			    				<div class="img-list">
-			    					<a class="img-box"  target="_blank" >
-			    						<img width="50" height="50" src="http://img10.360buyimg.com/N5/jfs/t154/284/2293815071/283723/4637d4b6/53cb3fe6Nfdeeb437.jpg" title="特步XTEP2014新品跑步鞋男鞋男子春夏季透气运动鞋男款户外网面慢跑鞋子 兰白 41">
-			    					</a>
-			    				</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">这是一款透气性很好的鞋子</div>
-			    			</td>
-			    			<td>
-			    				<div class="message">5.0</div>
-			    			</td>
-			    			<td>
-			    				<span class="ftx-03">2014-07-07 <br> 18:49:35</span>
-			    			</td>
-			    			<td class="order-doi">
-			    				<a onclick="cancelOrder(oid);" href="javascript:void(0);">删除评价</a>
-			    			</td>
-			    		</tr>
+				    	<tr class="tr-th">
+							<th width="286">浏览信息</th>
+							<th width="180">介绍</th>
+							<th width="100">
+								<select class="sele" name="" id="orderState">
+									<option selected="" value="4096">全部分数</option>
+									<option value="5">满分评价</option>
+									<option value="4">4分评价</option>
+									<option value="3">3分评价</option>
+									<option value="2">2分评价</option>
+									<option value="1">1分评价</option>
+									<option value="0">0分评价</option>
+									<option value="-1">-1分评价</option>
+									<option value="-2">-2分评价</option>
+									<option value="-3">-3分评价</option>
+									<option value="-4">-4分评价</option>
+									<option value="-5">-5分评价</option>
+								</select>
+							</th>
+							<th width="100">
+								<select class="sele" name="" id="submitDate">
+									<option selected="" value="0">全部时间</option>
+									<option value="1">最近三个月</option>
+									<option value="2">今年内</option>
+									<option value="9">2013年</option>
+									<option value="8">2012年</option>
+									<option value="3">2011年</option>
+									<option value="4">2010年</option>
+									<option value="5">2009年</option>
+									<option value="6">2008年</option>
+									<option value="7">2008年以前</option>
+								</select>
+							</th>
+						<th width="128">操作</th>
+						</tr>
+						<%for(EvaluationOfHistoryVO vo:vos){ %>
+							<tr class="tr-td">
+					   			<td>
+					   				<div class="img-list">
+					   					<a class="img-box"  target="_blank" >
+					   						<img width="50" height="50" src="/Img<%=vo.getPath() %>" title="<%=vo.getMemo()%>">
+					   					</a>
+					   				</div>
+					   			</td>
+					   			<td>
+					   				<div class="message"><%=vo.getMemo() %></div>
+					   			</td>
+					   			<td>
+					   				<div class="message">5.0</div>
+					   			</td>
+					   			<td>
+					   				<span class="ftx-03"><%=vo.getDateTime() %></span>
+					   			</td>
+					   			<td class="order-doi">
+					   				<a onclick="cancelOrder(<%=vo.getEvaluationId() %>);" href="javascript:void(0);">删除评价</a>
+					   			</td>
+					   		</tr>
+						<%} %>
+				   		
 			    	</table>
 		    	</div>
 	    	</div>
