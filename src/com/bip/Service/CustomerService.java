@@ -55,7 +55,7 @@ public class CustomerService {
 		return uservo;
 	}
 	
-	/**ÅÐ¶Ï×¢²áµÄÓÊÏäÊÇ·ñÓÐÖØ¸´£¬Èç¹ûÓÊÏäÒÑ±»×¢²á·µ»Øfalse£¬·ñÔò·µ»Øtrue¡£
+	/**ï¿½Ð¶ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½×¢ï¿½á·µï¿½ï¿½falseï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½trueï¿½ï¿½
 	 * */
 	public boolean queryEmailRepeatTimes(UserVO uservo){
 		List<Customer> cus = baseDAO.queryFactory(new Customer(), "t_customer", " and userEmail= '"+uservo.getUserEmail().trim()+"'");
@@ -83,7 +83,9 @@ public class CustomerService {
 				}
 			}
 			vo.setRealActivityId(ravo.getRealactivityID());
+			vos.add(vo);
 		}
+		
 		return vos;
 	}
 }
