@@ -233,7 +233,8 @@ public class CachedTool implements ICatch {
 		List<CacheKey> searchKeys =getCacheKeyByRealActionID(id);
 		RealActionVO vo = new RealActionVO();
 		if(searchKeys.size()>0){
-			Object obj = memcached.get(getRealActivityKey(searchKeys.get(0)));
+			//memcached.delete(getRealActivityKey(searchKeys.get(0)));
+			Object obj = memcached.get(getRealActivityKey(searchKeys.get(0)));		
 			if(obj!=null){
 				vo =JsonStrHandler.convertJSONTOObject((String)obj);
 			}else{

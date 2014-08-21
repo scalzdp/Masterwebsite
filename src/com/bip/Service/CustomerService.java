@@ -73,7 +73,7 @@ public class CustomerService {
 		List<Evaluation> evaluations = baseDAO.queryFactory(new Evaluation(),"t_evaluation", " and userId ="+userid);
 		for(Evaluation e :evaluations){
 			EvaluationOfHistoryVO vo = new EvaluationOfHistoryVO();
-			RealActionVO ravo = catched.searchFromCachedByRealActionID(e.getId());
+			RealActionVO ravo = catched.searchFromCachedByRealActionID(e.getRealActivityId());
 			vo.setDateTime(e.getTime());
 			vo.setEvaluationId(e.getId());
 			vo.setMemo(e.getMemo());
@@ -82,7 +82,7 @@ public class CustomerService {
 					vo.setPath(pvo.getPicMaxPath());
 				}
 			}
-			vo.setRealActivityId(ravo.getRealactivityID());
+			vo.setRealActivityId(e.getRealActivityId());
 			vos.add(vo);
 		}
 		

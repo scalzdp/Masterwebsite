@@ -238,7 +238,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<tr class="tr-td">
 					   			<td>
 					   				<div class="img-list">
-					   					<a class="img-box"  target="_blank" >
+					   					<a class="img-box" href="./Details/<%=vo.getRealActivityId() %>"  target="_blank" >
 					   						<img width="50" height="50" src="/Img<%=vo.getPath() %>" title="<%=vo.getMemo()%>">
 					   					</a>
 					   				</div>
